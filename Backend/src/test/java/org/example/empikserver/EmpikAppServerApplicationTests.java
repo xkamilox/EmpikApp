@@ -1,4 +1,4 @@
-package com.example.EmpikAppServer;
+package org.example.empikserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
