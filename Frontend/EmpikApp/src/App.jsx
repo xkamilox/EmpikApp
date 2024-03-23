@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom"
 import PATH from './paths';
+import './App.css';
 import Login from './pages/Login/login';
 import Registration from './pages/Registration/registration';
 
