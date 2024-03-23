@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import PATH from "../../paths";
+import "../../styles/login.css";
 
 function Login() {
   return (

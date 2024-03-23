@@ -1,12 +1,12 @@
-.body_login{
-    background-image: url('/src/images/Login/background.jpg');
+.body_registration{
+    background-image: url('/src/images/Registration/background.jpg');
     background-size: cover;
     display: flex;
     justify-content: center;
     height: 100vh;
 }
   
-.login_container{
+.register_container{
     text-align: center;
     flex-direction: column;
 }
@@ -37,7 +37,7 @@ h2{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 106%; 
+    width: 104%; 
     margin-top: 5vh;
 }
 
@@ -49,31 +49,4 @@ h2{
 
 text{
     font-size: small;
-}
-
-.text2{
-    font-size: 16px;
-}
-
-.text_container{
-    margin-top: 6vh;
-}
-
-.button_google{
-    display: flex;
-    color: #0330E6;
-    background-color: white;
-    border-color:#0330E6;
-    border-radius: 10px;
-    padding: 8px; 
-    width: 50%;
-    margin-top: 4vh;
-    justify-content: center;
-    align-items: center;
-}
-
-.google_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
