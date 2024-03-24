@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.example.empikserver.model.Role;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +33,12 @@ public class User {
     @Size(max = 120)
     private String password;
 
+    @Size(max = 120)
+    private String name;
+
+    @Size(max = 120)
+    private String surname;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -43,6 +50,8 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.name = name;
+        this.surname = surname;
     }
 
     public Long getId() {
@@ -77,6 +86,21 @@ public class User {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
     public Set<Role> getRoles() {
         return roles;
     }
