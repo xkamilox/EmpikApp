@@ -18,10 +18,10 @@ function Registration() {
         email,
         username,
         password,
-        role: ['user'] // Dopasuj do Twojego API - jeśli wymagane
+        role: ['user']
       });
-      // Możesz tu dodać jakąś logikę po pomyślnej rejestracji, np. przekierowanie
-      navigate(PATH.LOGIN); // Przekierowanie do logowania po pomyślnej rejestracji
+
+      navigate(PATH.LOGIN);
     } catch (error) {
       setError(error?.request?.response);
       console.error("Error during registration", error);
