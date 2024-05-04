@@ -1,0 +1,30 @@
+.body_product {
+    background-color: #F1F3F7; 
+    display: flex;
+    flex-direction: column; 
+    height: 100vh;
+}
+
+.topbar {
+    display: flex;
+    background-color: black;
+    background-size: cover;
+    height: 20vh;
+    width: 100%;
+}
+
+.logo {
+    margin-left: 3vw;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: end; 
+    padding-bottom: 3vh;
+    margin-left: 6vw;
+}
+
+.logout {
+    margin-left: auto;
+    padding: 1%;
+}
