@@ -1,16 +1,21 @@
 package org.example.empikserver.controller;
 
 import jakarta.validation.Valid;
+import org.example.empikserver.exception.TokenRefreshException;
 import org.example.empikserver.model.ERole;
+import org.example.empikserver.model.RefreshToken;
 import org.example.empikserver.model.Role;
 import org.example.empikserver.model.User;
 import org.example.empikserver.payload.request.LoginRequest;
 import org.example.empikserver.payload.request.SignupRequest;
+import org.example.empikserver.payload.request.TokenRefreshRequest;
 import org.example.empikserver.payload.response.JwtResponse;
 import org.example.empikserver.payload.response.MessageResponse;
+import org.example.empikserver.payload.response.TokenRefreshResponse;
 import org.example.empikserver.repository.RoleRepository;
 import org.example.empikserver.repository.UserRepository;
 import org.example.empikserver.security.jwt.JwtUtils;
+import org.example.empikserver.security.services.RefreshTokenService;
 import org.example.empikserver.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +50,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    RefreshTokenService refreshTokenService;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -52,15 +60,20 @@ public class AuthController {
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = jwtUtils.generateJwtToken(userDetails);
+
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
         return ResponseEntity
-                .ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+                .ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
     }
+
+
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
@@ -110,5 +123,21 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody TokenRefreshRequest request){
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "RefreshToken is not in db"));
     }
 }
