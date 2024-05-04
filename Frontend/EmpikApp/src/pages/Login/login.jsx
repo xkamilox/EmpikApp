@@ -35,7 +35,7 @@ function Login() {
         if(username && password) {
             dispatch(login(username, password))  //login wysyła POSTA z danymi
                 .then(() => {
-                    navigate(PATH.REGISTRATION); //testowo
+                    navigate(PATH.PRODUCT);
                     window.location.reload();
                 });
         }
