@@ -17,7 +17,7 @@ function Login() {
               <button className='button_register'>Create new</button>
             </Link>
           </div>
-          <button className='button'>Login</button>
+          <button className='button_login'>Login</button>
         </div>
         <div className='text_container'>
           <text className='text2'>Or Login With</text>
