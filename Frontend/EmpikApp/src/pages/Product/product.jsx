@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import PATH from "../../paths";
 import "../../styles/product.css";
+import { logout } from "../../actions/auth.js"
 
 function Product() {
+    const {user: currentUser} = useSelector((state) => state.auth); //na podstawie tego czy uzytkownik jest zalogowany będzie zawartość strony
     const productName = "Shoes";
     const productPrice = "5 zł";
 
@@ -11,6 +14,12 @@ function Product() {
         localStorage.setItem('productName', productName);
         localStorage.setItem('productPrice', productPrice);
     };
+
+    const dispatch = useDispatch();
+
+    const logOut = () => { //przy wylogowaniu currentUser sie jakos sam updateuje i chyba się
+        dispatch(logout());      // rerenderuje komponent
+    }
   return (
     <div className='body_product'>
         <div className='topbar'>
@@ -22,12 +31,25 @@ function Product() {
                 <Link to={PATH.SHOPPING_CART}>
                     <button className='product'>Shopping cart</button>
                 </Link>
-            </div>
-            <div className='logout'>
-                <Link to={PATH.LOGIN}>
-                    <button className='logout-button'>Log Out</button>
+                <Link to={PATH.PROFILE}>
+                    <button className='product'>Profile</button>
                 </Link>
             </div>
+            {currentUser ? (
+                <div className='logout'>
+                    {/*/ <Link to={PATH.LOGIN}>/*/}
+                        <button
+                            className='logout-button'
+                            onClick={logOut}
+                        >Log Out</button>
+                        {/*/</Link>/*/}
+                </div> ) :
+                (<div className='logout'>
+                     <Link to={PATH.LOGIN}>
+                        <button className='logout-button'>Login</button>
+                    </Link>
+                </div>
+            )}
         </div>
         <div className='container'>
             <div className='menu'>
