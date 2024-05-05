@@ -56,7 +56,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         try{
             Product prod = productRepository

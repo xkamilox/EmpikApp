@@ -38,7 +38,7 @@ function Registration() {
 
     if(!password.trim()){
           validationErrors.password = "password is required"
-    }else if( password.length<8 || password.length>120){
+    }else if( password.length<8 || password.length>40){
           validationErrors.password = "Password should contain between 8 and 120 characters"
     }
 

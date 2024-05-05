@@ -20,6 +20,7 @@ function Product() {
     const logOut = () => { //przy wylogowaniu currentUser sie jakos sam updateuje i chyba się
         dispatch(logout());      // rerenderuje komponent
     }
+
   return (
     <div className='body_product'>
         <div className='topbar'>
