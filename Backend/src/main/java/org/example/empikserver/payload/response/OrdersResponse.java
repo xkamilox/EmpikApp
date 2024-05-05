@@ -4,6 +4,8 @@ import org.example.empikserver.model.Order;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
+
 
 public class OrdersResponse {
 
@@ -12,11 +14,22 @@ public class OrdersResponse {
     private Date dateOfOrder;
     private BigDecimal totalPrice;
 
+    public Map<Long, Integer> getIdsAndCountMap() {
+        return idsAndCountMap;
+    }
+
+    public void setIdsAndCountMap(Map<Long, Integer> idsAndCountMap) {
+        this.idsAndCountMap = idsAndCountMap;
+    }
+
+    private Map<Long, Integer> idsAndCountMap;
+
     public OrdersResponse(Order order){
         id = order.getId();
         status = order.getStatus();
         dateOfOrder = order.getDateOfOrder();
         totalPrice = order.getTotalPrice();
+        idsAndCountMap = order.getItemsIdsAndCount();
     }
 
     public OrdersResponse() {
