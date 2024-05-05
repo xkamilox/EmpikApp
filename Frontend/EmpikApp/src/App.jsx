@@ -30,7 +30,7 @@ function App() {
       <Route path="*" element={<Navigate to={PATH.LOGIN} replace />} />
       <Route path={PATH.PROFILE} element={<Profile/>}/>
     </Routes>
-          <AuthVerify logOut={logOut}/> //przy każdej zmienie Route się odpala i sprawdza czy token wygasł jeśli tak to wylogowuje
+          <AuthVerify logOut={logOut}/> {/*przy każdej zmienie Route się odpala i sprawdza czy token wygasł jeśli tak to wylogowuje*/}
       </div>
 
 
