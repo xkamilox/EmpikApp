@@ -12,7 +12,7 @@ function Login() {
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
 
-    const { isLoggedIn } = useSelector(state => state.auth); //jak wejdzie przez url będąc zalogowanym to niech zostanie przeniesiony na inną stronę
+    const { isLoggedIn } = useSelector(state => state.user.isLoggedIn); //jak wejdzie przez url będąc zalogowanym to niech zostanie przeniesiony na inną stronę
     const { message } = useSelector(state => state.message); //wiadomość w responsie od serwera
 
 

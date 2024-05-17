@@ -1,8 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
-import rootReducer from "./reducers";
+import userReducer from "./slices/userSlice.jsx";
+import messageReducer from "./slices/messageSlice.jsx";
+//import rootReducer from "./reducers";
 
-const store = configureStore(
-  {reducer: rootReducer}
-)
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+    message: messageReducer,
+    }
+})
 
 export default store;

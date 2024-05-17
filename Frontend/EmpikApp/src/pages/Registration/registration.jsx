@@ -16,7 +16,7 @@ function Registration() {
   const [errors, setErrors] = useState({});
   const [successful, setSuccessful] = useState(false);
 
-  const { isLoggedIn } = useSelector(state => state.auth); //jak wejdzie przez url będąc zalogowanym to niech zostanie przeniesiony na inną stronę
+  const { isLoggedIn } = useSelector(state => state.user.isLoggedIn); //jak wejdzie przez url będąc zalogowanym to niech zostanie przeniesiony na inną stronę
   const { message } = useSelector(state => state.message);
 
   const dispatch = useDispatch();

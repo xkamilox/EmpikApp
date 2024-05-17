@@ -48,7 +48,7 @@ public class Order {
         return false;
     }
 
-    public Map<Long, Integer> getItemsIdsAndCount(){
+    public Map<Long, Integer> getItemsIdsAndCount(){ 
         Map<Long, Integer> idsAndCount = new HashMap<>();
         for(OrderProduct orderPr : orderProducts){
             idsAndCount.put(orderPr.getProduct().getId(), orderPr.getQuantity());

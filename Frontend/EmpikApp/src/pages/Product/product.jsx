@@ -6,7 +6,7 @@ import "../../styles/product.css";
 import { logout } from "../../actions/auth.js"
 
 function Product() {
-    const {user: currentUser} = useSelector((state) => state.auth); //na podstawie tego czy uzytkownik jest zalogowany będzie zawartość strony
+    const userState = useSelector((state) => state.user); //na podstawie tego czy uzytkownik jest zalogowany będzie zawartość strony
     const productName = "Shoes";
     const productPrice = "5 zł";
 
@@ -36,7 +36,7 @@ function Product() {
                     <button className='product'>Profile</button>
                 </Link>
             </div>
-            {currentUser ? (
+            {userState.isLoggedIn ? (
                 <div className='logout'>
                     {/*/ <Link to={PATH.LOGIN}>/*/}
                         <button
