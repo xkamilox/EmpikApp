@@ -3,6 +3,7 @@ package org.example.empikserver.security.services;
 import jakarta.transaction.Transactional;
 import org.example.empikserver.exception.TokenRefreshException;
 import org.example.empikserver.model.RefreshToken;
+import org.example.empikserver.model.User;
 import org.example.empikserver.repository.RefreshTokenRepository;
 import org.example.empikserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +30,31 @@ public class RefreshTokenService {
     }
 
     public RefreshToken createRefreshToken(Long userId){
-        RefreshToken refreshToken = new RefreshToken();
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        refreshToken.setUser(userRepository.findById(userId).get());
-        refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
-        refreshToken.setToken(UUID.randomUUID().toString());
+        Optional<RefreshToken> existingTokenOpt = refreshTokenRepository.findByUser(user);
 
-        refreshToken = refreshTokenRepository.save(refreshToken);
-        return refreshToken;
+        RefreshToken refreshToken;
+        if (existingTokenOpt.isPresent()) { //token juz jest
+
+            refreshToken = existingTokenOpt.get();
+            refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
+            refreshToken.setToken(UUID.randomUUID().toString());
+        } else {    //nie ma
+            refreshToken = new RefreshToken();
+            refreshToken.setUser(user);
+            refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
+            refreshToken.setToken(UUID.randomUUID().toString());
+        }
+        //wstawienie albo update
+        return refreshTokenRepository.save(refreshToken);
     }
 
+    @Transactional
     public RefreshToken verifyExpiration(RefreshToken token){
         if(token.getExpiryDate().compareTo(Instant.now()) < 0){
-            refreshTokenRepository.delete(token);
+            System.out.println("token wygas");
+            refreshTokenRepository.deleteByToken(token.getToken());
             throw new TokenRefreshException(token.getToken(),"Refresh token was expired. Please make a new signin request");
         }
         return token;

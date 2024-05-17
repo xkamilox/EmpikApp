@@ -23,9 +23,9 @@ function App() {
   return (
       <div>
     <Routes>
-      <Route index path={PATH.LOGIN} element={<Login/>}/>
+      <Route index path={PATH.PRODUCT} element={<Product/>}/>
+      <Route  path={PATH.LOGIN} element={<Login/>}/>
       <Route path={PATH.REGISTRATION} element={<Registration/>}/>
-      <Route path={PATH.PRODUCT} element={<Product/>}/>
       <Route path={PATH.SHOPPING_CART} element={<Shopping_cart/>}/>
       <Route path="*" element={<Navigate to={PATH.LOGIN} replace />} />
       <Route path={PATH.PROFILE} element={<Profile/>}/>

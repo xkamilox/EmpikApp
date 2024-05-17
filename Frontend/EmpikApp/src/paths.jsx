@@ -1,7 +1,7 @@
 const PATH = {
     LOGIN: "/login",
     REGISTRATION: "/registration",
-    PRODUCT: "/product",
+    PRODUCT: "/",
     SHOPPING_CART:"/shopping_cart",
     PROFILE:"/profile"
 }

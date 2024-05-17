@@ -140,4 +140,15 @@ public class AuthController {
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "RefreshToken is not in db"));
     }
+
+
+    @PostMapping("/signout")
+    public ResponseEntity<?> logoutUser() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        //UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        /*Long userId = userDetails.getId();
+        refreshTokenService.deleteByUserId(userId);*/
+        return ResponseEntity.ok(new MessageResponse("Log out successful!"));
+    }
+
 }
