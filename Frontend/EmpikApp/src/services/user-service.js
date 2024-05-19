@@ -1,5 +1,5 @@
 import authHeader from './auth-header';
-import axiosInstance from "../services/axiosInstance.jsx";
+import axiosInstance from "../interceptors/axiosInstance.jsx";
 
 const API_URL = 'users/';  //'http://localhost:8080/api/test/'
 

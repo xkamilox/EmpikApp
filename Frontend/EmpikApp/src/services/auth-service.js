@@ -1,12 +1,10 @@
-import axiosInstance from "../services/axiosInstance.jsx";
+import axiosInstance from "../interceptors/axiosInstance.jsx";
 
-const API_URL = "auth/";
 
 
  const login = (username, password) => {
     return axiosInstance
-            .post(API_URL + "signin", {username, password},
-              { skipAuthRefresh: true })
+            .post("auth/signin", {username, password})
             .then((response) => {
               if(response.data.accessToken){
                 localStorage.setItem("user", JSON.stringify(response.data));
@@ -17,17 +15,14 @@ const API_URL = "auth/";
 
   }
 
-/* const logout = () => {
-    localStorage.removeItem("user");
-  }*/
+
 
  const register = (username, email, password) => {
-    return axiosInstance.post(API_URL + "signup", {username, email, password});
+    return axiosInstance.post("auth/signup", {username, email, password});
   }
 
 
 export default {
   register,
-  login,
-  //logout
+  login
 };

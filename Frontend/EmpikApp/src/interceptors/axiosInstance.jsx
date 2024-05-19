@@ -1,13 +1,15 @@
 import axios from "axios";
 import store from "../store.js";
-import tokenService from "./tokenService.jsx";
+import tokenService from "../services/tokenService.jsx";
+import {commonAxiosConfig} from "./commonAxiosConfig.js";
 import {logout} from "../actions/auth.js";
 
 const instance = axios.create({
-    baseURL: "http://localhost:8080/api/",
+    //baseURL: "http://localhost:8080/api/",
 });
 
 instance.interceptors.request.use(async (config) => {
+        config = commonAxiosConfig(config);
         //const user = store.getState().user.user;
         const user = JSON.parse(localStorage.getItem("user"));
         config.headers['Authorization'] = `Bearer ${user ? user.accessToken : ''}`;
@@ -30,7 +32,6 @@ instance.interceptors.request.use(async (config) => {
                              store.dispatch(logout());
                              window.location.href = "/";
                              alert("wylogowano");
-                             await axios.post("http://localhost:8080/api/auth/signout");
                          }
                       }
                     );
