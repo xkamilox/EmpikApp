@@ -42,6 +42,10 @@ function Login() {
         }
     };
 
+    const goToGithub = ()  => {
+        window.location.href = 'http://localhost:8080/oauth2/authorization/github';
+    };
+
     return (
         <div className="body_login">
             <div className="login_container">
@@ -82,9 +86,9 @@ function Login() {
                     <text className='text2'>Or Login With</text>
                 </div>
                 <div className='google_container'>
-                    <button className='button_google'>
-                        <img src="/src/images/Login/google.png" alt="Button Image"/>Sign in with Google
-                    </button>
+                        <button className='button_google' onClick={goToGithub}>
+                            <img src="/src/images/Login/google.png" alt="Button Image"/>Sign in with Google
+                        </button>
                 </div>
             </div>
         </div>

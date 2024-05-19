@@ -22,14 +22,30 @@ const addToLocalStorageBasket = (id) => {
   }
 }
 
+const removeFromLocalStorageBasket = (id) => {
+  const basket = JSON.parse(localStorage.getItem("basket"));
 
-const addToUserBasket = (id) => { //wysyla posta by zaaktualizowac basket w bazie danych
+  const itemIndex = basket.items.findIndex(item => item.product_id === id);
+  basket.items[itemIndex].count -= 1;
+}
+
+
+const addToUserBasket = async(id) => { //wysyla posta by zaaktualizowac basket w bazie danych
   console.log("wysylam posta do basket");
-  axiosInstance.post("/basket", {operationName: "AddOrRemoveFromBasket",
+  const ok =  await axiosInstance.post("/basket", {operationName: "AddOrRemoveFromBasket",
                                           productId: id,
                                           count: 1}
   );
+  if(ok.data){ return true; } else return false;
+}
 
+const removeFromUserBasket = async(id) => { //wysyla posta by zaaktualizowac basket w bazie danych
+  console.log("wysylam posta do basket");
+  const ok = await axiosInstance.post("/basket", {operationName: "AddOrRemoveFromBasket",
+    productId: id,
+    count: -1}
+  );
+  if(ok.data){ return true; } else return false;
 }
 
 
@@ -49,19 +65,6 @@ const getUserBasket = () => {
 }
 
 
-/*const getProductsFromBasket = (basket) => {
-  const products = [];
-
-  basket.forEach( async (product) => {
-    await axiosInstance.get(`/products/${product.product_id}`)
-      .then( (response) => {
-        products.push( {...response.data, quantity: product.count} );
-      })
-  });
-
-  return products;
-}*/
-
 
 const getProductsFromBasket = async (basket) => {
   return await Promise.all(
@@ -72,9 +75,23 @@ const getProductsFromBasket = async (basket) => {
   );
 };
 
+
+const calculateBasketPrice = (products) => {
+  let price = 0;
+
+  products.map(item => {
+    price += (item.price * item.quantity);
+  });
+  console.log(price);
+  return price;
+}
+
 export default {
   addToLocalStorageBasket,
   addToUserBasket,
   getUserBasket,
   getProductsFromBasket,
+  removeFromUserBasket,
+  removeFromLocalStorageBasket,
+  calculateBasketPrice
 }

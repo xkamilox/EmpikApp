@@ -3,7 +3,10 @@ const PATH = {
     REGISTRATION: "/registration",
     PRODUCT: "/",
     SHOPPING_CART:"/shopping_cart",
-    PROFILE:"/profile"
+    PROFILE:"/profile",
+    GITHUB_LOGIN:"/login/oauth2/code/github",
+    CAPTURE_PAYMENT:"/capture",
+    CANCEL_PAYMENT:"/cancel",
 }
 
 export default PATH

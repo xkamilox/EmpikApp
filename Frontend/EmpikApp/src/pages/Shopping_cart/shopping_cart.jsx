@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import PATH from "../../paths";
 import "../../styles/product.css";
 import {useDispatch, useSelector} from "react-redux";
 import basketService from "../../services/basketService.js";
 import { logout} from "../../actions/auth.js";
 import {Commet} from "react-loading-indicators";
+import axiosInstance from "../../interceptors/axiosInstance.jsx";
+import ProductItemCart from "./ProductItemCart.jsx";
 
 function Shopping_cart() {
     const [basket, setBasket] = useState([]);
     const [isBasket, setIsBasket] = useState(false);
+    const [basketChanged, setBasketChanged] = useState(true);
+    const [basketPrice, setBasketPrice] = useState(0);
     const userState = useSelector(state => state.user);
 
     const dispatch = useDispatch();
@@ -20,13 +24,8 @@ function Shopping_cart() {
         //dispatch(getBasket());
 
        getBasket();
-    }, [])
+    }, [basketChanged])
 
-
-    useEffect( () => {
-        //setBasket(basket);
-        //setIsBasket(true);
-    }, [basket]);
 
 
     const getBasket = async() => {
@@ -35,6 +34,8 @@ function Shopping_cart() {
                 .then( async (data) => {
                     console.log(data);
                     const products = await basketService.getProductsFromBasket(data);
+                    console.log(products);
+                    setBasketPrice(basketService.calculateBasketPrice(products));
                     setIsBasket(true);
                     setBasket(products);
 
@@ -47,7 +48,7 @@ function Shopping_cart() {
             const basket = JSON.parse(localStorage.getItem("basket")).items;
             const products = await basketService.getProductsFromBasket(basket);
             console.log(products);
-
+            setBasketPrice(basketService.calculateBasketPrice(products));
             setIsBasket(true);
             setBasket(products);
 
@@ -55,9 +56,20 @@ function Shopping_cart() {
     }
 
 
-    const removeFromCart = () => {
+    const onChange = () => {
+        setBasketChanged(!basketChanged);
+    }
 
-    };
+
+
+    const pay = async() => {
+        const res = await
+        axiosInstance.post("/paypal/init", {}, {params: {sum: basketPrice}});
+
+        const approveUrl = res.data.redirectUrl;
+        console.log(approveUrl);
+        window.location.href = approveUrl;
+    }
 
 
     const logOut = () => { //przy wylogowaniu currentUser sie jakos sam updateuje i chyba się
@@ -106,18 +118,19 @@ function Shopping_cart() {
                         )
                     ): (
                         basket.map((product) => (
-                            <div className='product_item' key={product.id}>
-                                <img src="/src/images/Product/item.png" className="item"/>
-                                <span>{product.name} </span>
-                                <span>{product.producer} </span>
-                                <span>{product.price} </span>
-                                <span>{product.quantity} </span>
-                                <button onClick={removeFromCart}>Remove</button>
-                            </div>
-
+                             <ProductItemCart key={product.id} product={product} onChange={onChange} />
                         ))
+
                     )
-                    }
+                   }
+                <div>
+                    <div>
+                        <span>Cena calkowita: {basketPrice}</span>
+                    </div>
+                    <button onClick={pay}>
+                        KUP
+                    </button>
+                </div>
                 </div>
             </div>
         </div>

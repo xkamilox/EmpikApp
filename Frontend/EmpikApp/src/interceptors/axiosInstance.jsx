@@ -44,7 +44,15 @@ instance.interceptors.request.use(async (config) => {
 );
 
 instance.interceptors.response.use( (response) => {
-    return response;
+
+        // Check if the response contains a redirect URL
+/*        if (response.) {
+            const redirectUrl = response.data.redirectUrl;
+
+            instance.post("/paypal/capture")
+        }*/
+        return response;
+
 }, (error) => {
     return Promise.reject(error);
 }

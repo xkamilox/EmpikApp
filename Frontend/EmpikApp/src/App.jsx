@@ -10,6 +10,8 @@ import AuthVerify from "./common/AuthVerify";
 import {logout} from "./actions/auth.js";
 import {useDispatch} from "react-redux";
 import Profile from "./pages/profile.jsx";
+import CapturePayment from "./pages/capturePayments.jsx";
+import CancelPayments from "./pages/cancelPayments.jsx";
 
 
 
@@ -29,6 +31,8 @@ function App() {
       <Route path={PATH.SHOPPING_CART} element={<Shopping_cart/>}/>
       <Route path="*" element={<Navigate to={PATH.LOGIN} replace />} />
       <Route path={PATH.PROFILE} element={<Profile/>}/>
+      <Route path={PATH.CAPTURE_PAYMENT} element={<CapturePayment/>} />
+      <Route path={PATH.CANCEL_PAYMENT} element={<CancelPayments/>}  />
     </Routes>
           <AuthVerify logOut={logOut}/> {/*przy każdej zmienie Route się odpala i sprawdza czy token wygasł jeśli tak to wylogowuje*/}
       </div>
