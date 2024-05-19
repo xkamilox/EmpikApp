@@ -7,13 +7,6 @@ import java.util.Map;
 
 public class BasketResponse {
 
-    /*Map<Long, Integer> items = new HashMap<>();
-
-
-    public void addItem(Basket basket) {
-        items.put(basket.getId(), basket.getCount());
-    }*/
-
     private Long product_id;
 
     private int count;
