@@ -51,14 +51,6 @@ public class Product {
     @Column
     private boolean isAvailable;
 
-    @OneToMany(mappedBy = "product")
-    private Set<Basket> basket = new HashSet<Basket>();
-
-
-    public Set<Basket> getBasket() {
-        return basket;
-    }
-
 
 
     public Product(){
@@ -202,7 +194,4 @@ public class Product {
     }
 
 
-    public void setBasket(Set<Basket> basket) {
-        this.basket = basket;
-    }
 }

@@ -13,15 +13,6 @@ public class OrdersResponse {
     private String status;
     private Date dateOfOrder;
     private BigDecimal totalPrice;
-
-    public Map<Long, Integer> getIdsAndCountMap() {
-        return idsAndCountMap;
-    }
-
-    public void setIdsAndCountMap(Map<Long, Integer> idsAndCountMap) {
-        this.idsAndCountMap = idsAndCountMap;
-    }
-
     private Map<Long, Integer> idsAndCountMap;
 
     public OrdersResponse(Order order){
@@ -72,5 +63,13 @@ public class OrdersResponse {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Map<Long, Integer> getIdsAndCountMap() {
+        return idsAndCountMap;
+    }
+
+    public void setIdsAndCountMap(Map<Long, Integer> idsAndCountMap) {
+        this.idsAndCountMap = idsAndCountMap;
     }
 }

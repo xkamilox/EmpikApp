@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Link ,useNavigate} from "react-router-dom";
-import PATH from "../paths";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../services/axiosInstance.jsx";
 import tokenService from "../services/tokenService.jsx";
 import store from "../store.js";
 import {logout} from "../actions/auth.js";

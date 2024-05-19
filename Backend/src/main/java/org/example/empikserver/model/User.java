@@ -43,13 +43,6 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private Set<Basket> basket = new HashSet<Basket>();
-
-    public Set<Basket> getBasket() {
-        return basket;
-    }
-
 
 
     public User() {
@@ -116,10 +109,6 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public void setBasket(Set<Basket> basket) {
-        this.basket = basket;
     }
 
 

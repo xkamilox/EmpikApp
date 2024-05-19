@@ -1,12 +1,9 @@
-import UserService from "../services/user-service.js";
 import {useEffect, useState} from "react";
-import axiosInstance from "../services/axiosInstance.jsx";
+import axiosInstance from "../interceptors/axiosInstance.jsx";
 import {Commet} from "react-loading-indicators";
 
 
 export default function Profile() {
-    //const user = JSON.parse(sessionStorage.getItem("user"));
-    //const usern = UserService.getUser(user.id);
     const [user, setUser] = useState(null);
 
     useEffect( () => {
