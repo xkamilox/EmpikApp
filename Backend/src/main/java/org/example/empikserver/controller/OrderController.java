@@ -60,12 +60,12 @@ public class OrderController {
     @PostMapping("/orders")
     public ResponseEntity<OrdersResponse> createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) {
        try {
-            Optional<User> user = userRepository.findByUsername(createOrderRequest.getUsername());
+            Optional<User> user = userRepository.findById(createOrderRequest.getUserId());  //TODO przypadek niezalogowanego usera: id==null
             if (!user.isPresent()) {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
             else {
-                Order order = new Order(user.get(), "Order placed", createOrderRequest.getTotalPrice());
+                Order order = new Order(user.get(), "Order placed", createOrderRequest.getTotalPrice(), createOrderRequest.getDeliveryAddress());
                 //Stworzenie polaczenia miedzy orderem i produktami
                 createOrderRequest.getOrderedItemsIds().forEach(orderedProductId -> {   //iteruje po id zamowoinych produktów
                     Product product = productRepository.findById(orderedProductId).get();

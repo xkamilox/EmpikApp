@@ -1,6 +1,7 @@
 package org.example.empikserver.controller;
 
 import org.example.empikserver.model.User;
+import org.example.empikserver.payload.response.UserResponse;
 import org.example.empikserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,16 +46,19 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     @PreAuthorize("(hasRole('USER') and #id == authentication.principal.id) or hasRole('ADMIN')")
-    public ResponseEntity<User> getUserById(@PathVariable("id") long id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") long id) {
         Optional<User> user = userRepository.findById(id);
 
         if(user.isPresent()){
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+            UserResponse userResponse = new UserResponse(user.get());
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    //@GetMapping("/users/")
 
 
     @PutMapping("/users/{id}")

@@ -1,5 +1,5 @@
 import axiosInstance from "../interceptors/axiosInstance.jsx";
-import store from "../store.js";
+
 
 const addToLocalStorageBasket = (id) => {
   const basket = JSON.parse(localStorage.getItem("basket"));
@@ -50,11 +50,8 @@ const removeFromUserBasket = async(id) => { //wysyla posta by zaaktualizowac bas
 
 
 const getUserBasket = () => {
-  const userid = store.getState().user.user.id;
-  return axiosInstance.get("/basket",
-                          { params: { userid: userid }
-                                 }
-  ).then( (response) => {
+  return axiosInstance.get("/basket")
+    .then( (response) => {
         if(response.data) {
           return response.data;
         }
@@ -70,7 +67,7 @@ const getProductsFromBasket = async (basket) => {
   return await Promise.all(
     basket.map(async (item) => {
       const response = await axiosInstance.get(`/products/${item.product_id}`);
-      return {...response.data, quantity: item.count};
+      return {...response.data, quantity: item.count, addToOrder: true};
     })
   );
 };

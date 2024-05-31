@@ -19,7 +19,7 @@ function Login() {
 
     const dispatch = useDispatch();
 
-    const handleLogin = (e) => {
+    const handleLogin = async(e) => {
         e.preventDefault();
         const validationErrors = {};
 
@@ -34,10 +34,10 @@ function Login() {
         setErrors(validationErrors);
 
         if(username && password) {
-            dispatch(login(username, password))  //login wysyła POSTA z danymi
+            await dispatch(login(username, password))  //login wysyła POSTA z danymi
                 .then(() => {
                     navigate(PATH.PRODUCT);
-                    window.location.reload();
+                    //window.location.reload();
                 });
         }
     };

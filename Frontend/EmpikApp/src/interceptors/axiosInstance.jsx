@@ -11,11 +11,11 @@ const instance = axios.create({
 instance.interceptors.request.use(async (config) => {
         config = commonAxiosConfig(config);
         //const user = store.getState().user.user;
-        const user = JSON.parse(localStorage.getItem("user"));
-        config.headers['Authorization'] = `Bearer ${user ? user.accessToken : ''}`;
+        const auth = JSON.parse(localStorage.getItem("auth"));
+        config.headers['Authorization'] = `Bearer ${auth ? auth.accessToken : ''}`;
 
-        if(user){
-            const decodedJwt = tokenService.parseJwt(user.accessToken);
+        if(auth){
+            const decodedJwt = tokenService.parseJwt(auth.accessToken);
             const isExpired = decodedJwt.exp*1000 < Date.now();
 
             if(!isExpired) {  return config;}

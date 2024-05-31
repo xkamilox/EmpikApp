@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 export const basketSlice = createSlice({
   name: "basket",
   initialState: {
-    items: [],
+    products: [],
     price: 0,
   },
   reducers: {
     setBasket: (state, action) => {
-      state.items = action.payload.items;
-      //state.price =
+      state.products = action.payload.products;
+      state.price = action.payload.price;
     },
   }
 })

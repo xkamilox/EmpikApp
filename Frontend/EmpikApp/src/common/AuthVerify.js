@@ -21,6 +21,7 @@ const AuthVerify = (props) => {   //przy każdej zmienie Route się odpala i spr
             (error) => {
               if (error.response.status === 403) {
                 store.dispatch(logout());
+                console.log("403");
                 navigate("/");
               }
             });

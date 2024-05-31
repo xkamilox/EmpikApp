@@ -7,7 +7,13 @@ import axiosInstance from "../interceptors/axiosInstance.jsx";
             .post("auth/signin", {username, password})
             .then((response) => {
               if(response.data.accessToken){
-                localStorage.setItem("user", JSON.stringify(response.data));
+                localStorage.setItem("auth", JSON.stringify({
+                  accessToken: response.data.accessToken,
+                  refreshToken: response.data.refreshToken,
+                  userid: response.data.id
+                }));
+
+                //localStorage.setItem("user", JSON.stringify(response.data));
               }
 
               return response.data;

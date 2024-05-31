@@ -6,6 +6,7 @@ import Login from './pages/Login/login';
 import Registration from './pages/Registration/registration';
 import Product from './pages/Product/product';
 import Shopping_cart from './pages/Shopping_cart/shopping_cart';
+import CartShoppingInfo from "./pages/CartShoppingInfo.jsx";
 import AuthVerify from "./common/AuthVerify";
 import {logout} from "./actions/auth.js";
 import {useDispatch} from "react-redux";
@@ -29,6 +30,7 @@ function App() {
       <Route  path={PATH.LOGIN} element={<Login/>}/>
       <Route path={PATH.REGISTRATION} element={<Registration/>}/>
       <Route path={PATH.SHOPPING_CART} element={<Shopping_cart/>}/>
+      <Route path={PATH.SHOPPING_CART_INFO} element={<CartShoppingInfo/>} />
       <Route path="*" element={<Navigate to={PATH.LOGIN} replace />} />
       <Route path={PATH.PROFILE} element={<Profile/>}/>
       <Route path={PATH.CAPTURE_PAYMENT} element={<CapturePayment/>} />

@@ -1,6 +1,6 @@
 import basketService from "../services/basketService.js";
 
-export const getBasket = () => (dispatch) => {
+/*export const getBasketDispatch = () => (dispatch) => {
   return basketService.getUserBasket()
     .then( (data) => {
       dispatch({
@@ -10,4 +10,14 @@ export const getBasket = () => (dispatch) => {
     return Promise.resolve();
     }
     );
+};*/
+
+export const setReduxBasket = (products, price) => (dispatch) => {
+  dispatch({
+    type: "basket/setBasket",
+    payload: {
+      products: products,
+      price: price,
+    }
+  });
 };
