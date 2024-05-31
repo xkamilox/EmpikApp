@@ -45,6 +45,7 @@ function Login() {
 
     const handleLoginSuccess = (response) => {
         console.log(response);
+        dispatch({type: "user/loginGoogle"});
         navigate(PATH.PRODUCT);
       };
     
