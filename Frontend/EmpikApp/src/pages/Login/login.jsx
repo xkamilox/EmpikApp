@@ -3,6 +3,7 @@ import { Link ,useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PATH from "../../paths";
 import "../../styles/login.css";
+import { GoogleLogin } from '@react-oauth/google';
 
 import { login } from "../../actions/auth";
 
@@ -42,9 +43,14 @@ function Login() {
         }
     };
 
-    const goToGithub = ()  => {
-        window.location.href = 'http://localhost:8080/oauth2/authorization/github';
-    };
+    const handleLoginSuccess = (response) => {
+        console.log(response);
+        navigate(PATH.PRODUCT);
+      };
+    
+      const handleLoginError = () => {
+        console.log('Login nieudany');
+      };
 
     return (
         <div className="body_login">
@@ -83,12 +89,15 @@ function Login() {
                      {message && <span>{message}</span>}
                  </form>
                 <div className='text_container'>
-                    <text className='text2'>Or Login With</text>
+                    <span className='text2'>Or Login With</span>
                 </div>
-                <div className='google_container'>
-                        <button className='button_google' onClick={goToGithub}>
-                            <img src="/src/images/Login/google.png" alt="Button Image"/>Sign in with Google
-                        </button>
+                <div className='google_div'>
+                   
+                        <GoogleLogin
+                            onSuccess={handleLoginSuccess}
+                            onError={handleLoginError}
+                        />
+                    
                 </div>
             </div>
         </div>
