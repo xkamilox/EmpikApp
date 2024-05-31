@@ -11,8 +11,6 @@ import basketService from "../../services/basketService.js";
 
 function Product() {
     const userState = useSelector((state) => state.user); //na podstawie tego czy uzytkownik jest zalogowany będzie zawartość strony
-    const productName = "Shoes";
-    const productPrice = "5 zł";
     const [products, setProducts] = useState(null);
     const [category, setCategory] = useState("");
 
@@ -28,7 +26,7 @@ function Product() {
                 setProducts(response.data);
                 console.log(response.data);
             }, (error) => {
-                console.log("nie pobralo p[roduktow" + error.response.status);
+                console.log("nie pobralo produktow" + error.response.status);
             });
     }
 

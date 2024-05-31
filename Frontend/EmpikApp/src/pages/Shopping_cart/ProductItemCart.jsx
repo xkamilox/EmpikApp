@@ -3,12 +3,14 @@ import React, {useEffect, useState} from "react";
 import basketService from "../../services/basketService.js";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
+import {Checkbox} from "@mui/material";
 
 
 
 const ProductItemCart = ({ product, onChange }) => {
     const userState = useSelector(state => state.user);
     const[quantity, setQuantity] = useState(product.quantity);
+    const [addToOrder, setAddToOrder] = useState(product.addToOrder);
 
 
     useEffect( () => {
@@ -38,6 +40,11 @@ const ProductItemCart = ({ product, onChange }) => {
         }
     };
 
+    const changeAddToOrder = () => {
+        product.addToOrder = !product.addToOrder;
+        //setAddToOrder(!addToOrder);
+    }
+
 
     return (
         <div className='product_item' >
@@ -48,6 +55,7 @@ const ProductItemCart = ({ product, onChange }) => {
             <span>{quantity} </span>
             <button onClick={() => addToCart(product.id)}> +</button>
             <button onClick={() => removeFromCart(product.id)}> -</button>
+            <Checkbox checked = {product.addToOrder} onChange={changeAddToOrder} />
         </div>
     )
 
@@ -59,7 +67,8 @@ ProductItemCart.propTypes = {
         name: PropTypes.string.isRequired,
         producer: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
-        quantity: PropTypes.number.isRequired
+        quantity: PropTypes.number.isRequired,
+        addToOrder: PropTypes.bool.isRequired,
     }).isRequired,
     onChange: PropTypes.func.isRequired,
 };

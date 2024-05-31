@@ -8,6 +8,7 @@ import { logout} from "../../actions/auth.js";
 import {Commet} from "react-loading-indicators";
 import axiosInstance from "../../interceptors/axiosInstance.jsx";
 import ProductItemCart from "./ProductItemCart.jsx";
+import {setReduxBasket}  from "../../actions/basket.js" ;
 
 function Shopping_cart() {
     const [basket, setBasket] = useState([]);
@@ -31,12 +32,14 @@ function Shopping_cart() {
     const getBasket = async() => {
         if(userState.isLoggedIn){
             await basketService.getUserBasket()
+            //await dispatch(getBasketDispatch())
                 .then( async (data) => {
                     console.log(data);
                     const products = await basketService.getProductsFromBasket(data);
                     console.log(products);
                     setBasketPrice(basketService.calculateBasketPrice(products));
                     setIsBasket(true);
+                    dispatch(setReduxBasket(products, basketService.calculateBasketPrice(products)));
                     setBasket(products);
 
                 }, (error) => {
@@ -56,7 +59,7 @@ function Shopping_cart() {
     }
 
 
-    const onChange = () => {
+    const onChange = () => {    //wywoływana w komponencie z produktem do aktualizowania ilości i ceny
         setBasketChanged(!basketChanged);
     }
 
@@ -64,7 +67,7 @@ function Shopping_cart() {
 
     const pay = async() => {
         const res = await
-        axiosInstance.post("/paypal/init", {}, {params: {sum: basketPrice}});
+            axiosInstance.post("/paypal/init", {}, {params: {sum: basketPrice}});
 
         const approveUrl = res.data.redirectUrl;
         console.log(approveUrl);
@@ -130,6 +133,9 @@ function Shopping_cart() {
                     <button onClick={pay}>
                         KUP
                     </button>
+                    <Link to={PATH.SHOPPING_CART_INFO}>
+                        <button className='product'>KUP</button>
+                    </Link>
                 </div>
                 </div>
             </div>

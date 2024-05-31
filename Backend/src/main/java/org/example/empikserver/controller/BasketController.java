@@ -43,24 +43,29 @@ public class BasketController {
 
 
     @GetMapping("/basket")
-    @PreAuthorize("(hasRole('USER') and #userid == authentication.principal.id) or hasRole('ADMIN')")
-    public ResponseEntity< List<BasketResponse> > getUserBasket(@RequestParam Long userid) {
+    //@PreAuthorize("(hasRole('USER') and #userid == authentication.principal.id) or hasRole('ADMIN')")
+    public ResponseEntity< List<BasketResponse> > getUserBasket(/*@RequestParam Long userid*/) {
+        try {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); //pobrany jest user z securitycontext i z niego pobiera się id usera
+                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();          //by potem pobrać jego koszyk
+                Long userId = userDetails.getId();
+                User user = userRepository.findById(userId).get();
 
-        Optional<User> user = userRepository.findById(userid);
 
-        if(user.isPresent()){
-            List<Basket> basket = basketRepository.findByUser(user.get());
-            List<BasketResponse> basketResponse = new ArrayList<>();
-            basket.forEach(bask -> {
-                basketResponse.add(new BasketResponse(bask));
-            });
+                List<Basket> basket = basketRepository.findByUser(user);
+                List<BasketResponse> basketResponse = new ArrayList<>();
+                basket.forEach(bask -> {
+                    basketResponse.add(new BasketResponse(bask));
+                });
 
-            return new ResponseEntity<>(basketResponse, HttpStatus.OK);
-        }
-        else{
+                return new ResponseEntity<>(basketResponse, HttpStatus.OK);
+
+
+        }catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @PostMapping("/basket")

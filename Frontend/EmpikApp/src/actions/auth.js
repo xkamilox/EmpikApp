@@ -32,6 +32,7 @@ export const register = (username, email, password) => (dispatch) => {
 export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
     (data) => {
+      console.log("dispatchowanie");
       dispatch({
         type: "user/setUser",
         payload: {user: data},
@@ -45,6 +46,7 @@ export const login = (username, password) => (dispatch) => {
       return Promise.resolve();
     },
     (error) => {
+      console.log("niepowodzenie");
       const message =
         (error.response &&
           error.response.data &&
@@ -68,7 +70,7 @@ export const login = (username, password) => (dispatch) => {
 
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("auth");
 
   dispatch({
     type: "user/logout"

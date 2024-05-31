@@ -1,6 +1,7 @@
 package org.example.empikserver.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 
 import java.math.BigDecimal;
@@ -32,7 +33,21 @@ public class Order {
     private BigDecimal totalPrice;
 
     @Column
+    private String deliveryAddress;
+
+    @Column
+    private String email;
+
+    @Column
+    private String name;
+
+    @Column
+    private String surname;
+
+    @Column
     private boolean visibleForUser = true;
+
+
 
     public void addOrderProduct(OrderProduct orderProduct){
         orderProducts.add(orderProduct);
@@ -68,10 +83,11 @@ public class Order {
 
     }
 
-    public Order(User user, String status, BigDecimal totalPrice) {
+    public Order(User user, String status, BigDecimal totalPrice, String deliveryAddress) {
         this.user = user;
         this.status = status;
         this.totalPrice = totalPrice;
+        this.deliveryAddress = deliveryAddress;
     }
 
     public Order(Long id, User user, Set<OrderProduct> orderProducts, String status, Date dateOfOrder, BigDecimal totalPrice, boolean visibleForUser) {
@@ -138,5 +154,37 @@ public class Order {
 
     public void setVisibleForUser(boolean visibleForUser) {
         this.visibleForUser = visibleForUser;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }
