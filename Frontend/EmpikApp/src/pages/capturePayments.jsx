@@ -7,6 +7,7 @@ function CapturePayment () {
     const location = useLocation();
     const navigate = useNavigate();
     const [status, setStatus] = useState("processing");
+    //const placedOrder = useSelector(state => state.placedOrder);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -17,19 +18,22 @@ function CapturePayment () {
         if (token) {
             const postData = async () => {
                 try {
-                    const response = await axiosInstance.post('/paypal/capture', {}, { params: {token: token}});
+                    const placedOrderId = JSON.parse(localStorage.getItem("placedOrderId"));
+                    localStorage.removeItem("placedOrderId");
+                    const response = await axiosInstance.post('/paypal/capture', {}, { params: {token: token, placedOrderId: placedOrderId}});
 
                     if(response.data.status ==="success") {
 
                         setStatus("success");
+                        const timer = setTimeout(() => {
+                            //navigate('/placed_order', {state: placedOrder.placedOrder});
+                            navigate("/placed_order", {state: response.data.orderToShow});
+                        }, 3500);
                     }
                     else{
                         setStatus("failed");
+                        //TODO PaymentProcessingErrorPage
                     }
-
-                    const timer = setTimeout(() => {
-                        navigate('/');
-                    }, 3500);
 
                 } catch (error) {
                     console.error('Error: ', error.message);
@@ -51,7 +55,7 @@ function CapturePayment () {
                 <span>Przetwarzanie płatności...</span>
             ) : (
                 status === "success" ? (
-                    <span>Płatność się powiodła. Przekierowywanie do strony głównej...</span>
+                    <span>Płatność się powiodła. Nie zamykaj okna przeglądarki...</span>
                   ) : (
                     <span>Płatność się nie powiodła. Przekierowywanie do strony głównej...</span>
                   )

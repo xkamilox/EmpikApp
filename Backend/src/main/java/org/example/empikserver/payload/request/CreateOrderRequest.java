@@ -74,7 +74,6 @@ public class CreateOrderRequest {
         this.totalPrice = totalPrice;
     }
 
-
     public List<Long> getOrderedItemsIds() {
         return orderedItemsIds;
     }

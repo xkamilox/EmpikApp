@@ -13,14 +13,12 @@ import org.example.empikserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -65,7 +63,9 @@ public class OrderController {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
             else {
-                Order order = new Order(user.get(), "Order placed", createOrderRequest.getTotalPrice(), createOrderRequest.getDeliveryAddress());
+                Order order = new Order(user.get(), "Waiting for payment", createOrderRequest.getTotalPrice(), createOrderRequest.getDeliveryAddress(),
+                                        createOrderRequest.getName(), createOrderRequest.getSurname(), createOrderRequest.getEmail() );
+
                 //Stworzenie polaczenia miedzy orderem i produktami
                 createOrderRequest.getOrderedItemsIds().forEach(orderedProductId -> {   //iteruje po id zamowoinych produktów
                     Product product = productRepository.findById(orderedProductId).get();
@@ -90,6 +90,24 @@ public class OrderController {
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+    }
+
+
+    @PatchMapping("/orders/")
+    public ResponseEntity<HttpStatus> updateOrderStatus(@RequestParam(name = "orderid") Long orderId, @RequestParam(name= "newStatus") String newStatus) {
+        try {
+            Order orderToUpdate = orderRepository.findById(orderId).get();
+
+            orderToUpdate.setStatus(newStatus);
+
+            orderRepository.save(orderToUpdate);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        }catch(NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

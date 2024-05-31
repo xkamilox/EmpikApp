@@ -1,5 +1,6 @@
 package org.example.empikserver.controller;
 
+import jakarta.transaction.Transactional;
 import org.example.empikserver.model.Basket;
 import org.example.empikserver.model.Product;
 import org.example.empikserver.model.User;
@@ -24,7 +25,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins="*", methods = {RequestMethod.PUT,RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api")
 public class BasketController {
@@ -103,4 +104,26 @@ public class BasketController {
         }
         return new ResponseEntity<>(basketResponse, HttpStatus.OK);
     }
+
+
+    @DeleteMapping("/basket")
+    @Transactional
+    public ResponseEntity<HttpStatus> clearBasket(){
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); //pobrany jest user z securitycontext i z niego pobiera się id usera
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            Long userId = userDetails.getId();
+            User user = userRepository.findById(userId).get();
+
+            basketRepository.deleteAllByUser(user);
+
+        }catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

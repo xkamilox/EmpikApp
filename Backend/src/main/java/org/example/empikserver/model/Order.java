@@ -83,11 +83,14 @@ public class Order {
 
     }
 
-    public Order(User user, String status, BigDecimal totalPrice, String deliveryAddress) {
+    public Order(User user, String status, BigDecimal totalPrice, String deliveryAddress, String name, String surname, String email) {
         this.user = user;
         this.status = status;
         this.totalPrice = totalPrice;
         this.deliveryAddress = deliveryAddress;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
     }
 
     public Order(Long id, User user, Set<OrderProduct> orderProducts, String status, Date dateOfOrder, BigDecimal totalPrice, boolean visibleForUser) {

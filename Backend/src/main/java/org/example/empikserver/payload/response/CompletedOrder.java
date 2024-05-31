@@ -1,12 +1,17 @@
 package org.example.empikserver.payload.response;
 
+
+import org.example.empikserver.model.Order;
+
 public class CompletedOrder {
     private String status;
     private String payId;
+    private OrdersResponse orderToShow;
 
-    public CompletedOrder(String status, String payId) {
+    public CompletedOrder(String status, String payId, Order orderToShow) {
         this.status = status;
         this.payId = payId;
+        this.orderToShow = new OrdersResponse(orderToShow);
     }
 
     public CompletedOrder() {
@@ -33,6 +38,13 @@ public class CompletedOrder {
         this.payId = payId;
     }
 
+    public OrdersResponse getOrderToShow() {
+        return orderToShow;
+    }
+
+    public void setOrderToShow(Order orderToShow) {
+        this.orderToShow = new OrdersResponse(orderToShow);
+    }
 
 
 }

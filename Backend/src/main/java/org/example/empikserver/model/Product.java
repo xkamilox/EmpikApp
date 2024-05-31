@@ -51,6 +51,8 @@ public class Product {
     @Column
     private boolean isAvailable;
 
+    @Column
+    private String variant;
 
 
     public Product(){
@@ -193,5 +195,12 @@ public class Product {
         isAvailable = available;
     }
 
+    public String getVariant() {
+        return variant;
+    }
+
+    public void setVariant(String variant) {
+        this.variant = variant;
+    }
 
 }

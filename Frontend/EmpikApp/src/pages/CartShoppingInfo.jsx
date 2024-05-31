@@ -1,6 +1,9 @@
 import axiosInstance from "../interceptors/axiosInstance.jsx";
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import orderService from "../services/orderService.js";
+import {useNavigate} from "react-router-dom";
+
 
 function CartShoppingInfo() {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
@@ -15,10 +18,13 @@ function CartShoppingInfo() {
     const [voivodeship, setVoivodeship] = useState("");
     const [country, setCountry] = useState("");
 
+    const navigate = useNavigate();
+
+
 
     useEffect(() => {
         if(isLoggedIn){
-            const getUserInfo = async() => {
+            const getUserInfo = async() => {        //Pobiera dane użytkownika żeby uzupełnić pola
                 await axiosInstance.get(`/users/${userid}`)
                     .then((response) => {
                         setEmail(response.data.email ? response.data.email : "");
@@ -30,6 +36,41 @@ function CartShoppingInfo() {
             getUserInfo();
         }
     }, [])
+
+
+    const handleBuyButton = async(payNow) => {
+        const orderData = {
+            basket: basket,
+            email: email,
+            name: name,
+            surname: surname,
+            deliveryAddress: `${street} ${buildingNumber} ${city} ${voivodeship} ${country}`
+        }
+
+        if(isLoggedIn){
+            await orderService.sendCreateOrderRequest(orderData)
+                .then(async(response) => {
+                    if(payNow){
+                        localStorage.setItem("placedOrderId", JSON.stringify(response.data.id));
+                        const res = await
+                            axiosInstance.post("/paypal/init", {}, {params: {sum: response.data.totalPrice}});
+
+                        const approveUrl = res.data.redirectUrl;
+                        console.log(approveUrl);
+                        //navigate(approveUrl); //wyrzuca do logowania
+                        window.location.href = approveUrl;
+                    }
+                    else {
+                        navigate("/placed_order", {state: response.data});
+                    }
+                })
+                .catch(error => {
+                    console.log(error.message);
+                    navigate("/placing_order_fail");
+                })
+        }
+    }
+
 
 
 
@@ -93,6 +134,8 @@ function CartShoppingInfo() {
                 onChange={(e) => setCountry(e.target.value)}
             />
 
+            <button onClick={() => handleBuyButton(false)}>Place order and pay later</button>
+            <button onClick={() => handleBuyButton(true)}>Place order and pay now</button>
         </div>
 
     )

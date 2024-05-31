@@ -13,6 +13,8 @@ import {useDispatch} from "react-redux";
 import Profile from "./pages/profile.jsx";
 import CapturePayment from "./pages/capturePayments.jsx";
 import CancelPayments from "./pages/cancelPayments.jsx";
+import Placed_order from "./pages/placed_order.jsx";
+import PlacingOrderFail from "./pages/PlacingOrderFail.jsx";
 
 
 
@@ -31,6 +33,8 @@ function App() {
       <Route path={PATH.REGISTRATION} element={<Registration/>}/>
       <Route path={PATH.SHOPPING_CART} element={<Shopping_cart/>}/>
       <Route path={PATH.SHOPPING_CART_INFO} element={<CartShoppingInfo/>} />
+      <Route path={PATH.PLACED_ORDER} element={<Placed_order/>} />
+      <Route path={PATH.PLACING_ORDER_FAIL} element={<PlacingOrderFail/>} />
       <Route path="*" element={<Navigate to={PATH.LOGIN} replace />} />
       <Route path={PATH.PROFILE} element={<Profile/>}/>
       <Route path={PATH.CAPTURE_PAYMENT} element={<CapturePayment/>} />

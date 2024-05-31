@@ -5,6 +5,7 @@ import com.paypal.orders.*;
 import com.paypal.http.*;
 import org.example.empikserver.payload.response.CompletedOrder;
 import org.example.empikserver.payload.response.PaymentOrder;
+import org.example.empikserver.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class PaypalService {
 
     @Autowired
     private PayPalHttpClient payPalHttpClient;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
 
     public PaymentOrder createPayment(BigDecimal fee) {
@@ -63,7 +67,7 @@ public class PaypalService {
     }
 
 
-    public CompletedOrder completePayment(String token) {
+    public CompletedOrder completePayment(String token, Long placedOrderId) {
         OrdersCaptureRequest ordersCaptureRequest =
                 new OrdersCaptureRequest(token);
 
@@ -71,10 +75,15 @@ public class PaypalService {
             HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
 
             if(httpResponse.result().status() != null) {
-                return new CompletedOrder("success", token);
+
+                org.example.empikserver.model.Order orderToUpdate = orderRepository.findById(placedOrderId).get();  //zupdatowanie statusu zamówienia do "paid"
+                orderToUpdate.setStatus("Paid");
+                orderRepository.save(orderToUpdate);
+
+                return new CompletedOrder("success", token, orderToUpdate);
             }
         } catch (Exception e) {
-
+            return new CompletedOrder("error");
         }
         return new CompletedOrder("error");
     }

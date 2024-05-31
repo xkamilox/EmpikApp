@@ -1,4 +1,5 @@
 import axiosInstance from "../interceptors/axiosInstance.jsx";
+import store from "../store.js";
 
 
 const addToLocalStorageBasket = (id) => {
@@ -48,6 +49,11 @@ const removeFromUserBasket = async(id) => { //wysyla posta by zaaktualizowac bas
   if(ok.data){ return true; } else return false;
 }
 
+const clearUserBasket = async() => {
+  await axiosInstance.delete("/basket");
+  store.dispatch({type: "basket/clearBasket"});
+}
+
 
 const getUserBasket = () => {
   return axiosInstance.get("/basket")
@@ -89,6 +95,7 @@ export default {
   getUserBasket,
   getProductsFromBasket,
   removeFromUserBasket,
+  clearUserBasket,
   removeFromLocalStorageBasket,
   calculateBasketPrice
 }

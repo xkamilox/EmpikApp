@@ -23,8 +23,8 @@ public class PaymentController {
     }
 
     @PostMapping("/paypal/capture")
-    public CompletedOrder completePayment(@RequestParam String token) {
-        return paypalService.completePayment(token);
+    public CompletedOrder completePayment(@RequestParam(name = "token") String token, @RequestParam(name = "placedOrderId") Long placedOrderId) {
+        return paypalService.completePayment(token, placedOrderId);
     }
 
 
