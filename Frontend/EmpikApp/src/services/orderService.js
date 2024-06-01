@@ -5,7 +5,9 @@ const getProductIdsFromBasket = (basket) => {
   let productIds =[];
 
   basket.products.forEach((product) => {
-    productIds.push(product.id);
+    for(let i=0; i<product.quantity; i++) {
+      productIds.push(product.id);
+    }
   });
 
   return productIds;
@@ -28,5 +30,20 @@ const sendCreateOrderRequest = async(orderData) => {
   });
 }
 
+const getUserOrders = async(userId) => {
+  return axiosInstance.get(`/userorders/${userId}`);
+}
 
-export default {sendCreateOrderRequest};
+const getProductsFromOrder = async(idsAndCountMap) => {
+    return await Promise.all(
+      Object.keys(idsAndCountMap).map( async(key) => {
+          return await axiosInstance.get(`/products/${key}`)
+            .then(response => {
+              return response.data;
+            });
+        })
+      );
+}
+
+
+export default {sendCreateOrderRequest, getUserOrders, getProductsFromOrder};

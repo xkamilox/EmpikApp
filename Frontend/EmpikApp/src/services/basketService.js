@@ -54,6 +54,11 @@ const clearUserBasket = async() => {
   store.dispatch({type: "basket/clearBasket"});
 }
 
+const clearNotLoggedInBasket = () => {
+  localStorage.removeItem(("basket"));
+  store.dispatch({type: "basket/clearBasket"});
+}
+
 
 const getUserBasket = () => {
   return axiosInstance.get("/basket")
@@ -96,6 +101,7 @@ export default {
   getProductsFromBasket,
   removeFromUserBasket,
   clearUserBasket,
+  clearNotLoggedInBasket,
   removeFromLocalStorageBasket,
   calculateBasketPrice
 }

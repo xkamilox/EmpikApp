@@ -11,6 +11,7 @@ import AuthVerify from "./common/AuthVerify";
 import {logout} from "./actions/auth.js";
 import {useDispatch} from "react-redux";
 import Profile from "./pages/profile.jsx";
+import OrderHistory from "./pages/OrderHistory.jsx";
 import CapturePayment from "./pages/capturePayments.jsx";
 import CancelPayments from "./pages/cancelPayments.jsx";
 import Placed_order from "./pages/placed_order.jsx";
@@ -37,6 +38,7 @@ function App() {
       <Route path={PATH.PLACING_ORDER_FAIL} element={<PlacingOrderFail/>} />
       <Route path="*" element={<Navigate to={PATH.LOGIN} replace />} />
       <Route path={PATH.PROFILE} element={<Profile/>}/>
+      <Route path={PATH.ORDER_HISTORY} element={<OrderHistory/>} />
       <Route path={PATH.CAPTURE_PAYMENT} element={<CapturePayment/>} />
       <Route path={PATH.CANCEL_PAYMENT} element={<CancelPayments/>}  />
     </Routes>

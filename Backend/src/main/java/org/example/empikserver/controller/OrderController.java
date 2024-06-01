@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.*;
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins="*", methods = {RequestMethod.PUT,RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api")
 public class OrderController {
@@ -58,32 +58,41 @@ public class OrderController {
     @PostMapping("/orders")
     public ResponseEntity<OrdersResponse> createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) {
        try {
-            Optional<User> user = userRepository.findById(createOrderRequest.getUserId());  //TODO przypadek niezalogowanego usera: id==null
-            if (!user.isPresent()) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+           Order order;
+            if(createOrderRequest.getUserId() != null) {    //Jest userId w requescie - zalogowany
+                Optional<User> user = userRepository.findById(createOrderRequest.getUserId());
+
+               if (!user.isPresent()) {     //Nie ma usera o takim userId - zwraca 404
+                   return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+               }else{   //User o takim userId istnieje - tworzony jest obiekt Order z jego id
+                   order = new Order(user.get(), "Waiting for payment", createOrderRequest.getTotalPrice(), createOrderRequest.getDeliveryAddress(),
+                           createOrderRequest.getName(), createOrderRequest.getSurname(), createOrderRequest.getEmail());
+               }
+
+            } else {    //userId w requescie==null - niezalogowany
+                order = new Order(null, "Waiting for payment", createOrderRequest.getTotalPrice(), createOrderRequest.getDeliveryAddress(),
+                        createOrderRequest.getName(), createOrderRequest.getSurname(), createOrderRequest.getEmail());
             }
-            else {
-                Order order = new Order(user.get(), "Waiting for payment", createOrderRequest.getTotalPrice(), createOrderRequest.getDeliveryAddress(),
-                                        createOrderRequest.getName(), createOrderRequest.getSurname(), createOrderRequest.getEmail() );
 
-                //Stworzenie polaczenia miedzy orderem i produktami
-                createOrderRequest.getOrderedItemsIds().forEach(orderedProductId -> {   //iteruje po id zamowoinych produktów
-                    Product product = productRepository.findById(orderedProductId).get();
-                    if (!order.isProductMultiple(product)) {  //ta metoda sprawdzająca inkrementuje quantity jeśli już jest
-                        OrderProduct orderProduct = new OrderProduct();
-                        orderProduct.setProduct(product);
-                        order.addOrderProduct(orderProduct);
-                        orderProduct.setOrder(order);
-                    }
+                   //Stworzenie polaczenia miedzy orderem i produktami
+                   createOrderRequest.getOrderedItemsIds().forEach(orderedProductId -> {   //iteruje po id zamowionych produktów
+                       Product product = productRepository.findById(orderedProductId).get();
+                       if (!order.isProductMultiple(product)) {  //ta metoda sprawdzająca inkrementuje quantity jeśli już jest
+                           OrderProduct orderProduct = new OrderProduct();
+                           orderProduct.setProduct(product);
+                           order.addOrderProduct(orderProduct);
+                           orderProduct.setOrder(order);
+                       }
 
-                });
+                   });
 
-                order.setDateOfOrder(new Date());
+                   order.setDateOfOrder(new Date());
 
-                Order savedOrder = orderRepository.save(order);
-                OrdersResponse orderToReturn = new OrdersResponse(savedOrder);
-                return new ResponseEntity<>(orderToReturn, HttpStatus.CREATED);
-            }
+                   Order savedOrder = orderRepository.save(order);
+                   OrdersResponse orderToReturn = new OrdersResponse(savedOrder);
+                   return new ResponseEntity<>(orderToReturn, HttpStatus.CREATED);
+
 
            } catch(Exception e){
            System.out.println(e.getMessage());

@@ -7,6 +7,7 @@ const PATH = {
     PLACED_ORDER:"/placed_order",
     PLACING_ORDER_FAIL:"/placing_order_fail",
     PROFILE:"/profile",
+    ORDER_HISTORY:"/profile/order_history",
     GITHUB_LOGIN:"/login/oauth2/code/github",
     CAPTURE_PAYMENT:"/capture",
     CANCEL_PAYMENT:"/cancel",

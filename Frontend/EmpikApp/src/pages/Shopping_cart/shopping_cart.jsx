@@ -53,6 +53,7 @@ function Shopping_cart() {
             console.log(products);
             setBasketPrice(basketService.calculateBasketPrice(products));
             setIsBasket(true);
+            dispatch(setReduxBasket(products, basketService.calculateBasketPrice(products)));
             setBasket(products);
 
         }
@@ -63,16 +64,6 @@ function Shopping_cart() {
         setBasketChanged(!basketChanged);
     }
 
-
-
-    const pay = async() => {
-        const res = await
-            axiosInstance.post("/paypal/init", {}, {params: {sum: basketPrice}});
-
-        const approveUrl = res.data.redirectUrl;
-        console.log(approveUrl);
-        window.location.href = approveUrl;
-    }
 
 
     const logOut = () => { //przy wylogowaniu currentUser sie jakos sam updateuje i chyba się
@@ -130,9 +121,9 @@ function Shopping_cart() {
                     <div>
                         <span>Cena calkowita: {basketPrice}</span>
                     </div>
-                    <button onClick={pay}>
+                    {/*<button onClick={pay}>
                         KUP
-                    </button>
+                    </button>*/}
                     <Link to={PATH.SHOPPING_CART_INFO}>
                         <button className='product'>KUP</button>
                     </Link>

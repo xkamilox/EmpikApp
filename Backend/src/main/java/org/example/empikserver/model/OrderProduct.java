@@ -17,13 +17,14 @@ public class OrderProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column
     private int quantity = 1;
 
     public OrderProduct() {
     }
 
     public void incrementQuantity(){
-        quantity++;
+        quantity = quantity + 1;
     }
 
 

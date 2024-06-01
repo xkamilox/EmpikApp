@@ -1,37 +1,22 @@
 import {useEffect, useState} from "react";
-import axiosInstance from "../interceptors/axiosInstance.jsx";
-import {Commet} from "react-loading-indicators";
-import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import PATH from "../paths.jsx";
 
 
 export default function Profile() {
-    //const [user, setUser] = useState(null);
-    const user = useSelector(state => state.user);
 
     useEffect( () => {
-        //getUser()
+
     }, [])
 
-/*    let getUser = async() => {  //TODO Pobierać z reduxa nie z local storage albo wysyłać zapytanie żeby te dane pobrać
-        //const usern = JSON.parse(localStorage.getItem("user"));
-
-        let response = await axiosInstance.get(`users/${usern.id}`);
-        if(response.data) {
-            setUser(response.data);
-            console.log(user.id);
-        }
-    }*/
 
 
     return(
-         user ? (
         <div>
-            <text>{user.user.id}</text>
+            <button>Dane profilu</button>
+            <Link to={PATH.ORDER_HISTORY}>
+                <button>Historia zamówień</button>
+            </Link>
         </div>
-        ) : (
-             <div>
-                 <Commet color="#32cd32" size="medium" text="" textColor="" />
-             </div>
-        )
-);
+    );
 }

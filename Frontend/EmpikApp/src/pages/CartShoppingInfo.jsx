@@ -47,7 +47,7 @@ function CartShoppingInfo() {
             deliveryAddress: `${street} ${buildingNumber} ${city} ${voivodeship} ${country}`
         }
 
-        if(isLoggedIn){
+
             await orderService.sendCreateOrderRequest(orderData)
                 .then(async(response) => {
                     if(payNow){
@@ -68,7 +68,7 @@ function CartShoppingInfo() {
                     console.log(error.message);
                     navigate("/placing_order_fail");
                 })
-        }
+
     }
 
 
@@ -134,7 +134,7 @@ function CartShoppingInfo() {
                 onChange={(e) => setCountry(e.target.value)}
             />
 
-            <button onClick={() => handleBuyButton(false)}>Place order and pay later</button>
+            {isLoggedIn ? (<button onClick={() => handleBuyButton(false)}>Place order and pay later</button>) : (<span></span>)}
             <button onClick={() => handleBuyButton(true)}>Place order and pay now</button>
         </div>
 
