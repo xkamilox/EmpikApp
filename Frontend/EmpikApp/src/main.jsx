@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
       <BrowserRouter>
-      <GoogleOAuthProvider clientId="382749481827-ahbl6cgi9b4r92u12sgmbckgf3sue3jl.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="55094331842-isk4lcajk8ermsv9vkenn6eia49hoq45.apps.googleusercontent.com">
           <App/>
           </GoogleOAuthProvider>
         </BrowserRouter>

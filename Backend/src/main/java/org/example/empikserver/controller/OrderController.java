@@ -11,6 +11,9 @@ import org.example.empikserver.repository.OrderRepository;
 import org.example.empikserver.repository.ProductRepository;
 import org.example.empikserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +23,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.*;
 
-@CrossOrigin(origins="*", methods = {RequestMethod.PUT,RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE})
+@CrossOrigin(origins="*", methods = {RequestMethod.PUT,RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PATCH})
 @RestController
 @RequestMapping("/api")
 public class OrderController {
@@ -35,6 +38,7 @@ public class OrderController {
     ProductRepository productRepository;
 
     @GetMapping("/userorders/{id}")
+    @PreAuthorize("(hasRole('USER') and #userId == authentication.principal.id) or hasRole('ADMIN')")
     public ResponseEntity<List<OrdersResponse>> getUserOrders(@PathVariable("id") Long userId){
         try{
             Optional<User> user = userRepository.findById(userId);
@@ -56,6 +60,7 @@ public class OrderController {
 
 
     @PostMapping("/orders")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<OrdersResponse> createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) {
        try {
            Order order;
@@ -101,9 +106,26 @@ public class OrderController {
 
     }
 
+    @GetMapping("/admin/orders")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity< List<OrdersResponse> > getAllOrders(@RequestParam(name = "page") int page, @RequestParam(name= "pageSize") int pageSize) {
 
-    @PatchMapping("/orders/")
-    public ResponseEntity<HttpStatus> updateOrderStatus(@RequestParam(name = "orderid") Long orderId, @RequestParam(name= "newStatus") String newStatus) {
+        PageRequest pageRequest = PageRequest.of(page - 1,
+                pageSize,
+                Sort.by(Sort.Direction.DESC, "dateOfOrder"));
+
+        List<Order> orders = orderRepository.findAll(pageRequest).getContent();
+
+        List<OrdersResponse> ordersToSend = new ArrayList<>();
+        for(Order order : orders){
+            ordersToSend.add(new OrdersResponse(order));
+        }
+        return new ResponseEntity<>(ordersToSend, HttpStatus.OK);
+    }
+
+
+    @PatchMapping("/orders")
+    public ResponseEntity<HttpStatus> updateOrderStatus(@RequestParam(name = "orderId") Long orderId, @RequestParam(name= "newStatus") String newStatus) {
         try {
             Order orderToUpdate = orderRepository.findById(orderId).get();
 

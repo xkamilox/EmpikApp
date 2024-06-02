@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import PATH from "../../paths";
@@ -7,9 +7,11 @@ import { logout } from "../../actions/auth.js"
 import axiosInstance from "../../interceptors/axiosInstance.jsx";
 import {Commet} from "react-loading-indicators";
 import basketService from "../../services/basketService.js";
+import {UserContext} from "../../App.jsx";
 
 
 function Product() {
+    const {userRoleContext, setUserRoleContext} = useContext(UserContext);
     const userState = useSelector((state) => state.user); //na podstawie tego czy uzytkownik jest zalogowany będzie zawartość strony
     const [products, setProducts] = useState(null);
     const [category, setCategory] = useState("");
@@ -46,6 +48,7 @@ function Product() {
 
 
     const logOut = () => { //przy wylogowaniu currentUser sie jakos sam updateuje i chyba się
+        setUserRoleContext(null);
         dispatch(logout());      // rerenderuje komponent
     }
 
@@ -63,15 +66,16 @@ function Product() {
                 <Link to={PATH.PROFILE}>
                     <button className='product'>Profile</button>
                 </Link>
+                <Link to={PATH.ADMIN_BOARD}>
+                    {userRoleContext === "admin" ? (<span style={{color: "white"}}>panelAdmina</span>) : (<span></span>)}
+                </Link>
             </div>
             {userState.isLoggedIn ? (
                 <div className='logout'>
-                    {/*/ <Link to={PATH.LOGIN}>/*/}
                         <button
                             className='logout-button'
                             onClick={logOut}
                         >Log Out</button>
-                        {/*/</Link>/*/}
                 </div> ) :
                 (<div className='logout'>
                      <Link to={PATH.LOGIN}>

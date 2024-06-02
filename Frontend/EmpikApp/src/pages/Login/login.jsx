@@ -1,14 +1,16 @@
-import React,{useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { Link ,useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PATH from "../../paths";
 import "../../styles/login.css";
 import { GoogleLogin } from '@react-oauth/google';
-
+import {UserContext} from "../../App.jsx";
 import { login } from "../../actions/auth";
 
 
+
 function Login() {
+    const {userRoleContext, setUserRoleContext} = useContext(UserContext);
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -36,7 +38,9 @@ function Login() {
 
         if(username && password) {
             await dispatch(login(username, password))  //login wysyła POSTA z danymi
-                .then(() => {
+                .then((user) => {
+                    setUserRoleContext(user.roles.includes("ROLE_ADMIN") ? "admin" : "user");
+                    console.log(userRoleContext);
                     navigate(PATH.PRODUCT);
                     //window.location.reload();
                 });

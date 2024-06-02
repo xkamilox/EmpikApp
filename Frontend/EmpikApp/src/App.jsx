@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createContext, useState} from 'react';
 import { Route, Routes, Navigate } from "react-router-dom"
 import PATH from './paths';
 import './App.css';
@@ -16,17 +16,23 @@ import CapturePayment from "./pages/capturePayments.jsx";
 import CancelPayments from "./pages/cancelPayments.jsx";
 import Placed_order from "./pages/placed_order.jsx";
 import PlacingOrderFail from "./pages/PlacingOrderFail.jsx";
+import AdminBoard from "./pages/Admin/AdminBoard.jsx";
+import AdminOrders from "./pages/Admin/AdminOrders.jsx";
 
+export const UserContext = createContext(null); //do kontekstu zapisana jest rola uzytkownika, na tej podstawie sie wyswietla admin board
 
 
 function App() {
+    const [userRoleContext, setUserRoleContext] = useState(null);
 
     const dispatch = useDispatch();
     const logOut = () => {
+        setUserRoleContext(null);
         dispatch(logout());
     }
 
   return (
+      <UserContext.Provider value={{userRoleContext, setUserRoleContext}}>
       <div>
     <Routes>
       <Route index path={PATH.PRODUCT} element={<Product/>}/>
@@ -41,10 +47,12 @@ function App() {
       <Route path={PATH.ORDER_HISTORY} element={<OrderHistory/>} />
       <Route path={PATH.CAPTURE_PAYMENT} element={<CapturePayment/>} />
       <Route path={PATH.CANCEL_PAYMENT} element={<CancelPayments/>}  />
+      <Route path={PATH.ADMIN_BOARD} element={<AdminBoard/>} />
+      <Route path={PATH.ADMIN_ORDERS} element={<AdminOrders/>} />
     </Routes>
           <AuthVerify logOut={logOut}/> {/*przy każdej zmienie Route się odpala i sprawdza czy token wygasł jeśli tak to wylogowuje*/}
       </div>
-
+      </UserContext.Provider>
 
 
 )

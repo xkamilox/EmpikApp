@@ -1,6 +1,7 @@
 import axiosInstance from "../interceptors/axiosInstance.jsx";
 
 
+
 const getProductIdsFromBasket = (basket) => {
   let productIds =[];
 
@@ -46,4 +47,27 @@ const getProductsFromOrder = async(idsAndCountMap) => {
 }
 
 
-export default {sendCreateOrderRequest, getUserOrders, getProductsFromOrder};
+const getAllOrdersAdmin = async(page, pageSize) => {
+  return await axiosInstance.get("/admin/orders", {params: {
+      page: page,
+      pageSize: pageSize,
+    }});
+}
+
+
+const setOrderStatus = async(orderId, newStatus) => {
+  await axiosInstance.patch("/orders", {}, {params: {
+      orderId: orderId,
+      newStatus: newStatus,
+    }
+  });
+}
+
+
+export default {
+  sendCreateOrderRequest,
+  getUserOrders,
+  getProductsFromOrder,
+  getAllOrdersAdmin,
+  setOrderStatus
+};
