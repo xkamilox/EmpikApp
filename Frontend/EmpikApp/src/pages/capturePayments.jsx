@@ -30,10 +30,6 @@ function CapturePayment () {
                             navigate("/placed_order", {state: response.data.orderToShow});
                         }, 3500);
                     }
-                    else{
-                        setStatus("failed");
-                        //TODO PaymentProcessingErrorPage
-                    }
 
                 } catch (error) {
                     console.error('Error: ', error.message);

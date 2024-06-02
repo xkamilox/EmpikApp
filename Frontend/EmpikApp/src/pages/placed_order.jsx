@@ -2,7 +2,7 @@ import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import basketService from "../services/basketService.js";
 import {useSelector} from "react-redux";
-import store from "../store.js";
+
 
 
 function PlacedOrder() {    //TODO zrobić przysick do przejścia np na stronę główną

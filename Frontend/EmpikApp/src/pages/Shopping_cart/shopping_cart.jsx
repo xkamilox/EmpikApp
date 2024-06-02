@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import basketService from "../../services/basketService.js";
 import { logout} from "../../actions/auth.js";
 import {Commet} from "react-loading-indicators";
-import axiosInstance from "../../interceptors/axiosInstance.jsx";
 import ProductItemCart from "./ProductItemCart.jsx";
 import {setReduxBasket}  from "../../actions/basket.js" ;
 
@@ -32,7 +31,6 @@ function Shopping_cart() {
     const getBasket = async() => {
         if(userState.isLoggedIn){
             await basketService.getUserBasket()
-            //await dispatch(getBasketDispatch())
                 .then( async (data) => {
                     console.log(data);
                     const products = await basketService.getProductsFromBasket(data);
@@ -121,9 +119,7 @@ function Shopping_cart() {
                     <div>
                         <span>Cena calkowita: {basketPrice}</span>
                     </div>
-                    {/*<button onClick={pay}>
-                        KUP
-                    </button>*/}
+
                     <Link to={PATH.SHOPPING_CART_INFO}>
                         <button className='product'>KUP</button>
                     </Link>

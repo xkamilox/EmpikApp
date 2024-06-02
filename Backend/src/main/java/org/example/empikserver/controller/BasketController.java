@@ -44,7 +44,7 @@ public class BasketController {
 
 
     @GetMapping("/basket")
-    //@PreAuthorize("(hasRole('USER') and #userid == authentication.principal.id) or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity< List<BasketResponse> > getUserBasket(/*@RequestParam Long userid*/) {
         try {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); //pobrany jest user z securitycontext i z niego pobiera się id usera
@@ -79,12 +79,12 @@ public class BasketController {
             User user = userRepository.findById(userId).get();
 
             if (basketRequest.getOperationName().equals("AddOrRemoveFromBasket")) {
-                List<Basket> basketList = basketRepository.findByUser(user);
+                List<Basket> basketList = basketRepository.findByUser(user);    //pobiera baskety uzytkownika
                 Long productId = basketRequest.getProductId();
-                int quantityDiff = basketRequest.getCount();
+                int quantityDiff = basketRequest.getCount();                    //o ile zwiększyć quantity
 
 
-                if (!basketService.changeQuantityIfPresent(productId, basketList, quantityDiff)) { //sprawdza czy jest juz o basket z produktem o takim id,
+                if (!basketService.changeQuantityIfPresent(productId, basketList, quantityDiff)) { //sprawdza czy jest juz basket z produktem o takim id,
                     Basket newBasket = basketService.createNewBasket(user, productId);       //jesli tak to inkrementuje/dekrementuje count, zwraca false jeśli nie bylo
                     basketRepository.save(newBasket);
                     basketList.add(newBasket);

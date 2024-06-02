@@ -16,7 +16,6 @@ function OrderHistory() {
                     setOrders(response.data);
                 })
 
-            //setOrders(orders);
         };
         getOrders();
     }, [])

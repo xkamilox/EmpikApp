@@ -7,7 +7,7 @@ function CancelPayment() {
     const navigate = useNavigate();
 
     useEffect( () => {
-        navigate("/shopping_cart");
+        navigate("/");
     }, []);
 
 

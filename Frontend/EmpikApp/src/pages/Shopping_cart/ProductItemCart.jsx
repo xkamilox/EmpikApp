@@ -42,7 +42,6 @@ const ProductItemCart = ({ product, onChange }) => {
 
     const changeAddToOrder = () => {
         product.addToOrder = !product.addToOrder;
-        //setAddToOrder(!addToOrder);
     }
 
 

@@ -1,6 +1,5 @@
 import AuthService from "../services/auth-service.js";
-import {useContext} from "react";
-import {UserContext} from "../App.jsx";
+
 
 export const register = (username, email, password) => (dispatch) => {
   return AuthService.register(username, email, password).then(
