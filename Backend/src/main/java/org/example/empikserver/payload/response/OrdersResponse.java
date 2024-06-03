@@ -26,7 +26,11 @@ public class OrdersResponse {
         dateOfOrder = order.getDateOfOrder();
         totalPrice = order.getTotalPrice();
         idsAndCountMap = order.getItemsIdsAndCount();
-        userid = order.getUser().getId();
+        if(order.getUser()!=null) {
+            userid = order.getUser().getId();
+        }else {
+            userid= 0L;
+        }
         deliveryAddress = order.getDeliveryAddress();
         ordererEmail = order.getEmail();
         ordererName = order.getName();

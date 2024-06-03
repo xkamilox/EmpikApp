@@ -60,7 +60,7 @@ public class OrderController {
 
 
     @PostMapping("/orders")
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     public ResponseEntity<OrdersResponse> createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) {
        try {
            Order order;
@@ -96,6 +96,7 @@ public class OrderController {
 
                    Order savedOrder = orderRepository.save(order);
                    OrdersResponse orderToReturn = new OrdersResponse(savedOrder);
+
                    return new ResponseEntity<>(orderToReturn, HttpStatus.CREATED);
 
 
