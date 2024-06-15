@@ -8,6 +8,7 @@ import axiosInstance from "../../interceptors/axiosInstance.jsx";
 import {Commet} from "react-loading-indicators";
 import basketService from "../../services/basketService.js";
 import {UserContext} from "../../App.jsx";
+import FavoriteService from "../../services/favoriteService.js";
 
 
 function Product() {
@@ -15,12 +16,18 @@ function Product() {
     const userState = useSelector((state) => state.user); //na podstawie tego czy uzytkownik jest zalogowany będzie zawartość strony
     const [products, setProducts] = useState(null);
     const [category, setCategory] = useState("");
+    const [favorites, setFavorites] = useState([]);
 
     const dispatch = useDispatch();
 
     useEffect( () => {
         getProducts();
+
     }, [])
+
+    useEffect( () => {
+        console.log(favorites)
+    },[favorites])
 
     const getProducts = async() => {
          await axiosInstance.get("products")
@@ -30,11 +37,18 @@ function Product() {
             }, (error) => {
                 console.log("nie pobralo produktow" + error.response.status);
             });
+
+        if(userState.isLoggedIn){
+           await getUserFavorites();
+        }
     }
 
-    /*const handleMoveToBasket = () => {
-        dispatch(getBasket());
-    }*/
+    const getUserFavorites = async() => {
+        const favs = await FavoriteService.getUserFavorites();
+        console.log(favs);
+        setFavorites(favs);
+        console.log(favorites)
+    }
 
     const addToCart = (id) => {
         if(userState.isLoggedIn){
@@ -45,6 +59,19 @@ function Product() {
         }
     };
 
+/*    const isProductInFavorites = (productId) => {
+        console.log("w czy jest: ", favorites);
+        return FavoriteService.isProductInFavorites(productId, favorites);
+    }*/
+
+
+/*    const removeFromFavorites = async(productId) => {
+        await axiosInstance.delete("/favorites", {
+            params: {
+                productId: productId,
+            }
+        });
+    }*/
 
 
     const logOut = () => { //przy wylogowaniu currentUser sie jakos sam updateuje i chyba się
@@ -147,12 +174,22 @@ function Product() {
                                 addToCart(product.id)
                             }}>ADD
                             </button>
+                            {/*<img src={isProductInFavorites(product.id, favorites) ? "/images/HeartStraight.png" : "/images/heart_unfilled.png"}*/}
+                            <img src="/images/heart_unfilled.png"
+                                 alt="add to favorites"
+                                 onClick={() => FavoriteService.addProductToFavorites(product.id)}
+                                 /*onMouseEnter={handleMouseEnter}
+                                 onMouseLeave={handleMouseLeave}*/
+                                 width="35"
+                                 height="35"
+                            />
+
                         </div>
                     ))
-                 ) : ( <div>
+                ) : (<div>
                         <Commet color="#32cd32" size="medium" text="" textColor=""/>
-                       </div>
-                     )
+                    </div>
+                )
                 }
             </div>
         </div>

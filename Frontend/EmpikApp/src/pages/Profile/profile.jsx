@@ -1,28 +1,29 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import PATH from "../paths.jsx";
-import axiosInstance from "../interceptors/axiosInstance.jsx";
+import PATH from "../../paths.jsx";
+import FavoriteService from "../../services/favoriteService.js";
 import {Commet} from "react-loading-indicators";
+import FavoriteProduct from "./FavoriteProduct.jsx";
+import UserService from "../../services/user-service.js";
 
 
 export default function Profile() {
     const [favorites, setFavorites] = useState([]);
     const [isFavorites, setIsFavorites] = useState(false);
+    const [isChanged, setIsChanged] = useState(false);
 
     useEffect( () => {
         const getFavorites = async() => {
-            await axiosInstance.get("/favorites")
-                .then(response => {
-                    console.log(response.data);
-                    setFavorites(response.data);
-                }).catch(
-                    console.log("error w pobeiraniuu ulubionych")
-                )
+            const response = await FavoriteService.getUserFavorites();
+            setFavorites(response);
         }
         getFavorites();
-    }, [])
+    }, [isChanged])
 
 
+    const onChange = () => {
+        setIsChanged(!isChanged);
+    }
 
     return(
         <div>
@@ -45,10 +46,8 @@ export default function Profile() {
                     )
                 ) :
                 (
-                   favorites.map(favorite => (
-                       <div key={favorite.name}>
-                        <span>{favorite.name}</span>
-                       </div>
+                   favorites.map(favoriteProduct => (
+                       <FavoriteProduct key={favoriteProduct.id} favoriteProduct={favoriteProduct} onChange={onChange}/>
                    ))
                 )
             }

@@ -5,6 +5,7 @@ import org.example.empikserver.model.Favorite;
 import org.example.empikserver.model.Product;
 import org.example.empikserver.model.User;
 import org.example.empikserver.payload.response.BasketResponse;
+import org.example.empikserver.payload.response.FavoriteProductResponse;
 import org.example.empikserver.payload.response.UserResponse;
 import org.example.empikserver.repository.FavoriteRepository;
 import org.example.empikserver.repository.UserRepository;
@@ -107,35 +108,5 @@ public class UserController {
     }
 
 
-    @GetMapping("/favorites")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity< List<Product> > getFavorites() {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); //pobrany jest user z securitycontext i z niego pobiera się id usera
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();          //by potem pobrać jego koszyk
-            Long userId = userDetails.getId();
-            User user = userRepository.findById(userId).get();
-
-            List<Favorite> favorites = favoriteRepository.findAllByUser(user);
-            List<Product> favoriteProducts = new ArrayList<>();
-
-            favorites.forEach(favorite -> {
-                favoriteProducts.add(favorite.getProduct());
-
-            });
-
-            System.out.println(favoriteProducts);
-
-            return new ResponseEntity<>(favoriteProducts, HttpStatus.OK);
-
-
-
-        }catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 
 }

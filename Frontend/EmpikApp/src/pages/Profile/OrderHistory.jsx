@@ -1,8 +1,8 @@
-import orderService from "../services/orderService.js";
+import orderService from "../../services/orderService.js";
 import React, {useEffect, useState} from "react";
 import {Commet} from "react-loading-indicators";
-import OrderInList from "./OrderInList.jsx";
-import axiosInstance from "../interceptors/axiosInstance.jsx";
+import OrderInList from "../OrderInList.jsx";
+import axiosInstance from "../../interceptors/axiosInstance.jsx";
 
 function OrderHistory() {
     const [orders, setOrders] = useState([]);
