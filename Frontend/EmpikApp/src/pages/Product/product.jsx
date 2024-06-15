@@ -1,46 +1,80 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import PATH from "../../paths";
 import "../../styles/product.css";
 import { logout } from "../../actions/auth.js"
 import axiosInstance from "../../interceptors/axiosInstance.jsx";
-import { Commet } from "react-loading-indicators";
+import {Commet} from "react-loading-indicators";
 import basketService from "../../services/basketService.js";
-import { UserContext } from "../../App.jsx";
+import {UserContext} from "../../App.jsx";
+import FavoriteService from "../../services/favoriteService.js";
+
 
 function Product() {
-    const { userRoleContext, setUserRoleContext } = useContext(UserContext);
-    const userState = useSelector((state) => state.user);
+    const {userRoleContext, setUserRoleContext} = useContext(UserContext);
+    const userState = useSelector((state) => state.user); //na podstawie tego czy uzytkownik jest zalogowany będzie zawartość strony
     const [products, setProducts] = useState(null);
     const [category, setCategory] = useState("");
     const [searchTerm, setSearchTerm] = useState(""); // Dodajemy stan do przechowywania wprowadzonego terminu wyszukiwania
+    const [favorites, setFavorites] = useState([]);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    useEffect( () => {
         getProducts();
-    }, []);
+    }, [])
 
-    const getProducts = async () => {
-        await axiosInstance.get("products")
-            .then((response) => {
+    useEffect( () => {
+        console.log(favorites)
+    },[favorites])
+
+    const getProducts = async() => {
+         await axiosInstance.get("products")
+            .then( (response) => {
                 setProducts(response.data);
             })
             .catch((error) => {
                 console.log("Nie pobrano produktów: " + error.response.status);
             });
+
+        if(userState.isLoggedIn){
+           await getUserFavorites();
+        }
     };
 
+    const getUserFavorites = async() => {
+        const favs = await FavoriteService.getUserFavorites();
+        console.log(favs);
+        setFavorites(favs);
+        console.log(favorites)
+    }
+
     const addToCart = (id) => {
-        if (userState.isLoggedIn) {
+        if(userState.isLoggedIn){
             basketService.addToUserBasket(id);
-        } else {
+        }
+        else {
             basketService.addToLocalStorageBasket(id);
         }
     };
 
-    const logOut = () => {
+/*    const isProductInFavorites = (productId) => {
+        console.log("w czy jest: ", favorites);
+        return FavoriteService.isProductInFavorites(productId, favorites);
+    }*/
+
+
+/*    const removeFromFavorites = async(productId) => {
+        await axiosInstance.delete("/favorites", {
+            params: {
+                productId: productId,
+            }
+        });
+    }*/
+
+
+    const logOut = () => { //przy wylogowaniu currentUser sie jakos sam updateuje i chyba się
         setUserRoleContext(null);
         dispatch(logout());
     };
@@ -77,16 +111,16 @@ function Product() {
                             className='logout-button'
                             onClick={logOut}
                         >Log Out</button>
-                    </div>) :
-                    (<div className='logout'>
-                        <Link to={PATH.LOGIN}>
-                            <button className='logout-button'>Login</button>
-                        </Link>
-                    </div>
-                    )}
-            </div>
-            <div className='container'>
-                <div className='menu'>
+                </div> ) :
+                (<div className='logout'>
+                     <Link to={PATH.LOGIN}>
+                        <button className='logout-button'>Login</button>
+                    </Link>
+                </div>
+            )}
+        </div>
+        <div className='container'>
+            <div className='menu'>
                 <div className='body_input'>
                     <input
                         type="text"
@@ -160,6 +194,15 @@ function Product() {
                                         <div className='row_item'>
                                             <b><p>{product.price} zł</p></b>
                                             <button className='ADD' onClick={() => addToCart(product.id)}>ADD</button>
+                                            {/*<img src={isProductInFavorites(product.id, favorites) ? "/images/HeartStraight.png" : "/images/heart_unfilled.png"}*/}
+                                            <img src="/images/heart_unfilled.png"
+                                                 alt="add to favorites"
+                                                 onClick={() => FavoriteService.addProductToFavorites(product.id)}
+                                                /*onMouseEnter={handleMouseEnter}
+                                                onMouseLeave={handleMouseLeave}*/
+                                                 width="35"
+                                                 height="35"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -173,6 +216,7 @@ function Product() {
             </div>
         </div>
     );
+
 }
 
 export default Product;

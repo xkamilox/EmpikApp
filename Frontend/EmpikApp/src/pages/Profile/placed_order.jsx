@@ -1,6 +1,6 @@
 import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
-import basketService from "../services/basketService.js";
+import basketService from "../../services/basketService.js";
 import {useSelector} from "react-redux";
 
 
