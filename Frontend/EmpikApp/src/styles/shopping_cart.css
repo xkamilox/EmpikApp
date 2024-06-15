@@ -27,4 +27,115 @@
 .logout {
     margin-left: auto;
     padding: 1%;
+    margin-left: 43vw;
+}
+
+.coinainer2{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.product_item_shoping{
+    margin-left: 20px;
+    display: flex;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.shopping_info{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+}
+
+.shopping_edit{
+    display: flex;
+    flex-direction:row;
+    justify-content: end;
+    width: 100%;
+    margin-right: 20px;
+    align-items: center;
+}
+
+.name_shopping{
+    margin-left: 20px;
+}
+
+.ilosc_edit{
+    position: absolute; 
+    right: 12vw; 
+    display: flex;
+    align-items: center;
+}
+
+.edit{
+    margin-left: 5px;
+}
+
+.container2{
+    font-size: 18px;
+}
+
+.cena_calkowita{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-right: 34px;
+    margin-top: 10px;
+}
+
+.product2 {
+    background-color: black;
+    border: none;
+    color: white;
+    font-size: 120%;
+    font-weight:bold ;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.zamowienie{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    align-items: center;
+}
+
+.input_field2 {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.input_field2:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.button2 {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    width: 60%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 2%;
+}
+
+.button2:hover {
+    background-color: #333;
+}
+
+.button_row{
+    display: flex;
+    flex-direction: row;
 }

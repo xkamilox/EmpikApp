@@ -94,6 +94,8 @@
     color: rgb(235, 86, 0); 
 }
 .products_item{
+    display: flex;
+    flex-direction: row;
     width: 100%;
     overflow: auto;
     height: 100%;
@@ -101,7 +103,7 @@
 
 .product_item{
     background-color: white;
-    height: 30vh;
+    height: 33vh;
     width: 30vh;
     margin: 1%;
 }
@@ -110,3 +112,24 @@
     display: flex;
 }
 
+.item_img{
+    display: flex;
+    justify-content: center
+}
+
+.item_text{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.row_item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top:-20px ;
+}
+
+.ADD{
+    height: 3vh;
+    margin-top: 10px;
+}

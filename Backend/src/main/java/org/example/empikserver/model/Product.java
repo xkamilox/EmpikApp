@@ -54,17 +54,21 @@ public class Product {
     @Column
     private String variant;
 
+    @Column
+    private String Category;
+
 
     public Product(){
 
     }
 
-    public Product(String name, BigDecimal price, String producer, String description, int recommendedAge, String recommendedSex, String material,
+    public Product(String name, BigDecimal price, String producer, String description,String Category, int recommendedAge, String recommendedSex, String material,
                    Integer heightInMilimeters, Integer widthInMilimeters, Integer depthInMilimeters, Integer weightInGrams, boolean isAvailable) {
         this.name = name;
         this.price = price;
         this.producer = producer;
         this.description = description;
+        this.Category= Category;
         this.recommendedAge = recommendedAge;
         this.recommendedSex = recommendedSex;
         this.material = material;
@@ -80,6 +84,7 @@ public class Product {
         this.price = product.getPrice();
         this.producer = product.getProducer();
         this.description = product.getDescription();
+        this.Category= product.getCategory();
         this.recommendedAge = product.getRecommendedAge();
         this.recommendedSex = product.getRecommendedSex();
         this.material = product.getMaterial();
@@ -157,6 +162,14 @@ public class Product {
 
     public Integer getHeightInMilimeters() {
         return heightInMilimeters;
+    }
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
     }
 
     public void setHeightInMilimeters(Integer heightInMilimeters) {

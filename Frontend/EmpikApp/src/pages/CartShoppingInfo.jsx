@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import orderService from "../services/orderService.js";
 import {useNavigate} from "react-router-dom";
+import "../styles/shopping_cart.css";
 
 
 function CartShoppingInfo() {
@@ -71,76 +72,73 @@ function CartShoppingInfo() {
 
     }
 
-
-
-
     return (
-        <div>
-            <p>{basket.price}</p>
+        <div className="zamowienie">
+            <p>Cena całkowita: {basket.price} zł</p>
+            {/* <p>{basket.count}</p> */}
             <input
                 type="text"
                 placeholder="Email"
-                className="input_field"
+                className="input_field2"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Name"
-                className="input_field"
+                className="input_field2"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Surname"
-                className="input_field"
+                className="input_field2"
                 value={surname}
                 onChange={(e) => setSurname(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Street"
-                className="input_field"
+                className="input_field2"
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Building number"
-                className="input_field"
+                className="input_field2"
                 value={buildingNumber}
                 onChange={(e) => setBuildingNumber(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="City"
-                className="input_field"
+                className="input_field2"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Voivodeship"
-                className="input_field"
+                className="input_field2"
                 value={voivodeship}
                 onChange={(e) => setVoivodeship(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Country"
-                className="input_field"
+                className="input_field2"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
             />
-
-            {isLoggedIn ? (<button onClick={() => handleBuyButton(false)}>Place order and pay later</button>) : (<span></span>)}
-            <button onClick={() => handleBuyButton(true)}>Place order and pay now</button>
+            <div className="button_row">
+                {isLoggedIn ? (<button className="button2" onClick={() => handleBuyButton(false)}>Place order and pay later</button>) : (<span></span>)}
+                <button className="button2" onClick={() => handleBuyButton(true)}>Place order and pay now</button>
+            </div>
         </div>
 
     )
-
-
 }
 
 export default CartShoppingInfo;
