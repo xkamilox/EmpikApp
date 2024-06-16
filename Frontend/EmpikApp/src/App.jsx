@@ -18,6 +18,7 @@ import Placed_order from "./pages/Profile/placed_order.jsx";
 import PlacingOrderFail from "./pages/PlacingOrderFail.jsx";
 import AdminBoard from "./pages/Admin/AdminBoard.jsx";
 import AdminOrders from "./pages/Admin/AdminOrders.jsx";
+import AddProductPage from "./pages/Admin/AddProductPage.jsx";
 
 export const UserContext = createContext(null); //do kontekstu zapisana jest rola uzytkownika, na tej podstawie sie wyswietla admin board
 
@@ -49,6 +50,7 @@ function App() {
       <Route path={PATH.CANCEL_PAYMENT} element={<CancelPayments/>}  />
       <Route path={PATH.ADMIN_BOARD} element={<AdminBoard/>} />
       <Route path={PATH.ADMIN_ORDERS} element={<AdminOrders/>} />
+      <Route path={PATH.ADMIN_ADD_PRODUCT} element={<AddProductPage/>} />
     </Routes>
           <AuthVerify logOut={logOut}/> {/*przy każdej zmienie Route się odpala i sprawdza czy token wygasł jeśli tak to wylogowuje*/}
       </div>

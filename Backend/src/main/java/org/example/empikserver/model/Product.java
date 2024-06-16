@@ -1,6 +1,7 @@
 package org.example.empikserver.model;
 
 import jakarta.persistence.*;
+import org.example.empikserver.payload.request.ProductRequest;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -61,6 +62,24 @@ public class Product {
     public Product(){
 
     }
+
+    public Product(ProductRequest productRequest, boolean isAvailable){
+        name = productRequest.getName();
+        price = productRequest.getPrice();
+        producer = productRequest.getProducer();
+        description = productRequest.getDescription();
+        recommendedAge =productRequest.getRecommendedAge();
+        recommendedSex=productRequest.getRecommendedSex();
+        material=productRequest.getMaterial();
+        heightInMilimeters=productRequest.getHeightInMilimeters();
+        widthInMilimeters=productRequest.getWidthInMilimeters();
+        depthInMilimeters=productRequest.getDepthInMilimeters();
+        weightInGrams=productRequest.getWeightInGrams();
+        variant=productRequest.getVariant();
+        Category=productRequest.getCategory();
+        this.isAvailable = isAvailable;
+    }
+
 
     public Product(String name, BigDecimal price, String producer, String description,String Category, int recommendedAge, String recommendedSex, String material,
                    Integer heightInMilimeters, Integer widthInMilimeters, Integer depthInMilimeters, Integer weightInGrams, boolean isAvailable) {

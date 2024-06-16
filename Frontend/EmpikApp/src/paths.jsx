@@ -10,6 +10,7 @@ const PATH = {
     ORDER_HISTORY:"/profile/order_history",
     ADMIN_BOARD:"/admin",
     ADMIN_ORDERS:"/admin/orders",
+    ADMIN_ADD_PRODUCT:"/admin/add_product",
     GITHUB_LOGIN:"/login/oauth2/code/github",
     CAPTURE_PAYMENT:"/capture",
     CANCEL_PAYMENT:"/cancel",

@@ -1,6 +1,7 @@
 package org.example.empikserver.controller;
 
 import org.example.empikserver.model.Product;
+import org.example.empikserver.payload.request.ProductRequest;
 import org.example.empikserver.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,9 +56,10 @@ public class ProductController {
             }
     }
 
+
     @PostMapping("/products")
-    //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Product> createProduct(@ModelAttribute ProductRequest product) {
         try{
             Product prod = productRepository
                     .save(new Product(product, false));
@@ -66,6 +68,7 @@ public class ProductController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PutMapping("/products/{id}")
     @PreAuthorize("hasRole('ADMIN')")
