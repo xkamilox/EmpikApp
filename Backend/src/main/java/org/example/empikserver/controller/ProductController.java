@@ -61,8 +61,13 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> createProduct(@ModelAttribute ProductRequest product) {
         try{
+
+            byte[] imageData = product.getImage().getBytes();
+
+
+
             Product prod = productRepository
-                    .save(new Product(product, false));
+                    .save(new Product(product, false, imageData));
             return new ResponseEntity<>(prod, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

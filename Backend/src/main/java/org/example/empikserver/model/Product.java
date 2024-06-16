@@ -2,8 +2,10 @@ package org.example.empikserver.model;
 
 import jakarta.persistence.*;
 import org.example.empikserver.payload.request.ProductRequest;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,26 +60,28 @@ public class Product {
     @Column
     private String Category;
 
+    @Lob
+    @Column /*(columnDefinition = "BYTEA")*/
+    private byte[] image;
 
-    public Product(){
+    public Product() {}
 
-    }
-
-    public Product(ProductRequest productRequest, boolean isAvailable){
-        name = productRequest.getName();
-        price = productRequest.getPrice();
-        producer = productRequest.getProducer();
-        description = productRequest.getDescription();
-        recommendedAge =productRequest.getRecommendedAge();
-        recommendedSex=productRequest.getRecommendedSex();
-        material=productRequest.getMaterial();
-        heightInMilimeters=productRequest.getHeightInMilimeters();
-        widthInMilimeters=productRequest.getWidthInMilimeters();
-        depthInMilimeters=productRequest.getDepthInMilimeters();
-        weightInGrams=productRequest.getWeightInGrams();
-        variant=productRequest.getVariant();
-        Category=productRequest.getCategory();
+    public Product(ProductRequest productRequest, boolean isAvailable, byte[] image) {
+        this.name = productRequest.getName();
+        this.price = productRequest.getPrice();
+        this.producer = productRequest.getProducer();
+        this.description = productRequest.getDescription();
+        this.recommendedAge = productRequest.getRecommendedAge();
+        this.recommendedSex = productRequest.getRecommendedSex();
+        this.material = productRequest.getMaterial();
+        this.heightInMilimeters = productRequest.getHeightInMilimeters();
+        this.widthInMilimeters = productRequest.getWidthInMilimeters();
+        this.depthInMilimeters = productRequest.getDepthInMilimeters();
+        this.weightInGrams = productRequest.getWeightInGrams();
+        this.variant = productRequest.getVariant();
+        this.Category = productRequest.getCategory();
         this.isAvailable = isAvailable;
+        this.image = image;
     }
 
 
@@ -233,6 +237,14 @@ public class Product {
 
     public void setVariant(String variant) {
         this.variant = variant;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
 }

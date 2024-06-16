@@ -9,6 +9,7 @@ import {Commet} from "react-loading-indicators";
 import basketService from "../../services/basketService.js";
 import {UserContext} from "../../App.jsx";
 import FavoriteService from "../../services/favoriteService.js";
+import ProductService from "../../services/productService.js";
 
 
 function Product() {
@@ -32,7 +33,10 @@ function Product() {
     const getProducts = async() => {
          await axiosInstance.get("products")
             .then( (response) => {
-                setProducts(response.data);
+                const prodsImgs = ProductService.convertImageFromByteArray(response.data);
+                console.log(prodsImgs);
+                //setProducts(response.data);
+                setProducts(prodsImgs);
             })
             .catch((error) => {
                 console.log("Nie pobrano produktów: " + error.response.status);
@@ -187,7 +191,7 @@ function Product() {
                             .map((product) => (
                                 <div className='product_item' key={product.id}>
                                     <div className='item_img'>
-                                        <img src="/src/images/Product/item.png" className="item" />
+                                        <img src={product.imageSrc ? product.imageSrc : "/src/images/Product/item.png"} className="item"  alt={product.name}/>
                                     </div>
                                     <div className='item_text'>
                                         <p>{product.producer + " " + product.name}</p>

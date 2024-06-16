@@ -26,6 +26,7 @@ function FavoriteProduct({favoriteProduct, onChange} ) {
     return (
         <div>
             {/* eslint-disable-next-line react/prop-types */}
+            {/*TODO Jak is_available==false to zrobić wyszarzenie czy coś*/}
             <p>{favoriteProduct.name}</p>
             <p>{favoriteProduct.variant}</p>
             <p>{favoriteProduct.producer}</p>

@@ -1,6 +1,7 @@
 package org.example.empikserver.payload.request;
 
 import jakarta.persistence.Column;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -11,29 +12,22 @@ public class ProductRequest {
     private String producer;
     private String description;
     private int recommendedAge;
-
     private String recommendedSex;
-
     private String material;
-
     private Integer heightInMilimeters;
-
     private Integer widthInMilimeters;
-
     private Integer depthInMilimeters;
-
     private Integer weightInGrams;
-
     private String variant;
-
     private String Category;
+    private MultipartFile image;
 
     public ProductRequest() {
     }
 
     public ProductRequest(String name, BigDecimal price, String producer, String description, int recommendedAge,
                           String recommendedSex, String material, Integer heightInMilimeters, Integer widthInMilimeters,
-                          Integer depthInMilimeters, Integer weightInGrams, String variant, String category) {
+                          Integer depthInMilimeters, Integer weightInGrams, String variant, String category, MultipartFile image) {
         this.name = name;
         this.price = price;
         this.producer = producer;
@@ -47,6 +41,7 @@ public class ProductRequest {
         this.weightInGrams = weightInGrams;
         this.variant = variant;
         Category = category;
+        this.image = image;
     }
 
     public String getName() {
@@ -151,5 +146,13 @@ public class ProductRequest {
 
     public void setCategory(String category) {
         Category = category;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 }
