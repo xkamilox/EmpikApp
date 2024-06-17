@@ -33,10 +33,10 @@ function Product() {
     const getProducts = async() => {
          await axiosInstance.get("products")
             .then( (response) => {
-                const prodsImgs = ProductService.convertImageFromByteArray(response.data);
-                console.log(prodsImgs);
-                //setProducts(response.data);
-                setProducts(prodsImgs);
+                //const prodsImgs = ProductService.convertImageFromByteArray(response.data);
+                //console.log(prodsImgs);
+                setProducts(response.data);
+                //setProducts(prodsImgs);
             })
             .catch((error) => {
                 console.log("Nie pobrano produktów: " + error.response.status);

@@ -60,13 +60,13 @@ public class Product {
     @Column
     private String Category;
 
-    @Lob
-    @Column /*(columnDefinition = "BYTEA")*/
-    private byte[] image;
+/*    @Lob
+    @Column *//*(columnDefinition = "BYTEA")*//*
+    private byte[] image;*/
 
     public Product() {}
 
-    public Product(ProductRequest productRequest, boolean isAvailable, byte[] image) {
+    public Product(ProductRequest productRequest, boolean isAvailable/*, byte[] image*/) {
         this.name = productRequest.getName();
         this.price = productRequest.getPrice();
         this.producer = productRequest.getProducer();
@@ -81,7 +81,7 @@ public class Product {
         this.variant = productRequest.getVariant();
         this.Category = productRequest.getCategory();
         this.isAvailable = isAvailable;
-        this.image = image;
+        //this.image = image;
     }
 
 
@@ -239,12 +239,12 @@ public class Product {
         this.variant = variant;
     }
 
-    public byte[] getImage() {
+/*    public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
-    }
+    }*/
 
 }

@@ -20,7 +20,7 @@ public class ProductRequest {
     private Integer weightInGrams;
     private String variant;
     private String Category;
-    private MultipartFile image;
+    //private MultipartFile image;
 
     public ProductRequest() {
     }
@@ -41,7 +41,7 @@ public class ProductRequest {
         this.weightInGrams = weightInGrams;
         this.variant = variant;
         Category = category;
-        this.image = image;
+       // this.image = image;
     }
 
     public String getName() {
@@ -148,11 +148,11 @@ public class ProductRequest {
         Category = category;
     }
 
-    public MultipartFile getImage() {
+/*    public MultipartFile getImage() {
         return image;
     }
 
     public void setImage(MultipartFile image) {
         this.image = image;
-    }
+    }*/
 }

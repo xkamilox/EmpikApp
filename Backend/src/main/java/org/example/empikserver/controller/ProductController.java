@@ -62,12 +62,12 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@ModelAttribute ProductRequest product) {
         try{
 
-            byte[] imageData = product.getImage().getBytes();
+            //byte[] imageData = product.getImage().getBytes();
 
 
 
             Product prod = productRepository
-                    .save(new Product(product, false, imageData));
+                    .save(new Product(product, false/*, imageData*/));
             return new ResponseEntity<>(prod, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

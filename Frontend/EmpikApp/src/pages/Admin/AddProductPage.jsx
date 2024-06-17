@@ -16,7 +16,7 @@ const AddProductPage = () => {
         weightInGrams: '',
         category: '',
         variant: '',
-        image: null
+        //image: null
     });
 
     const handleChange = (e) => {
@@ -74,10 +74,13 @@ const AddProductPage = () => {
             <input type="text" name="category" placeholder="Category" value={formData.category} onChange={handleChange}
                    required/>
             <input type="text" name="variant" placeholder="Variant" value={formData.variant} onChange={handleChange}/>
-            <input type="file" name="image" onChange={handleChange} accept="image/*" required/>
+
             <button type="submit">Create Product</button>
         </form>
     );
 };
 
 export default AddProductPage;
+
+
+//            <input type="file" name="image" onChange={handleChange} accept="image/*" required/>
