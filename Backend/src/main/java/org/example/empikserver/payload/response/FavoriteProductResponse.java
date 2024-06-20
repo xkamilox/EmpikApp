@@ -12,6 +12,7 @@ public class FavoriteProductResponse {
     private BigDecimal price;
     private boolean is_available;
     private String variant;
+    private String imagePath;
 
 
     public FavoriteProductResponse(Product product){
@@ -21,17 +22,19 @@ public class FavoriteProductResponse {
         this.price = product.getPrice();
         this.is_available = product.isAvailable();
         this.variant = product.getVariant();
+        this.imagePath = product.getImagePath();
     }
 
     public FavoriteProductResponse() {
     }
 
-    public FavoriteProductResponse(String name, String producer, BigDecimal price, boolean is_available, String variant) {
+    public FavoriteProductResponse(String name, String producer, BigDecimal price, boolean is_available, String variant, String imagePath) {
         this.name = name;
         this.producer = producer;
         this.price = price;
         this.is_available = is_available;
         this.variant = variant;
+        this.imagePath = imagePath;
     }
 
     public Long getId() {
@@ -82,4 +85,11 @@ public class FavoriteProductResponse {
         this.variant = variant;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }

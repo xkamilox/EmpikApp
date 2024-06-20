@@ -1,8 +1,6 @@
-
-
 // eslint-disable-next-line react/prop-types
 import PropTypes from "prop-types";
-import axiosInstance from "../../interceptors/axiosInstance.jsx";
+
 import {useState} from "react";
 import FavoriteService from "../../services/favoriteService.js";
 
@@ -11,11 +9,6 @@ function FavoriteProduct({favoriteProduct, onChange} ) {
 
 
     const removeFromFavorites = async() => {
-/*        await axiosInstance.delete("/favorites", {
-            params: {
-                productId: favoriteProduct.id,
-            }
-        });*/
         await FavoriteService.removeProductFromFavorites(favoriteProduct.id);
         onChange();
     }
@@ -27,6 +20,7 @@ function FavoriteProduct({favoriteProduct, onChange} ) {
         <div>
             {/* eslint-disable-next-line react/prop-types */}
             {/*TODO Jak is_available==false to zrobić wyszarzenie czy coś*/}
+            <img src={favoriteProduct.imagePath} alt={favoriteProduct.name} width="150" height="150"/>
             <p>{favoriteProduct.name}</p>
             <p>{favoriteProduct.variant}</p>
             <p>{favoriteProduct.producer}</p>
@@ -52,6 +46,7 @@ FavoriteProduct.propTypes = {
         price: PropTypes.number.isRequired,
         is_available: PropTypes.bool.isRequired,
         variant: PropTypes.string.isRequired,
+        imagePath: PropTypes.string.isRequired,
     }).isRequired,
     onChange: PropTypes.func.isRequired,
 }

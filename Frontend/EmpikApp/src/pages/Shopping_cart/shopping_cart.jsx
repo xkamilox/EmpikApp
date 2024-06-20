@@ -45,7 +45,7 @@ function Shopping_cart() {
 
     const calculateBasketPrice = (products) => {
         return products.reduce((total, product) => {
-            return product.addToOrder ? total + (product.price * product.quantity) : total;
+            return product.addToOrder && product.available ? total + (product.price * product.quantity) : total;
         }, 0);
     };
 
