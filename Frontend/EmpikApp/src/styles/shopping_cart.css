@@ -139,3 +139,86 @@
     display: flex;
     flex-direction: row;
 }
+
+@media (max-width: 768px) {
+    .topbar {
+        height: 15vh;
+    }
+
+    .logo {
+        margin-left: 2vw;
+    }
+
+    .topbar-right {
+        margin-left: 4vw;
+    }
+
+    .logout {
+        margin-left: auto;
+    }
+
+    .coinainer2 {
+        flex-direction: column;
+    }
+
+    .shopping_edit {
+        justify-content: center;
+        margin-right: 0;
+    }
+
+    .ilosc_edit {
+        position: static;
+        margin-top: 10px;
+    }
+
+    .cena_calkowita {
+        margin-right: 20px;
+    }
+
+    .button2 {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .topbar {
+        height: 12vh;
+    }
+
+    .logo {
+        margin-left: 1vw;
+    }
+
+    .topbar-right {
+        margin-left: 2vw;
+    }
+
+    .logout {
+        margin-left: 35vw;
+    }
+
+    .container2 {
+        font-size: 16px;
+    }
+
+    .product_item_shoping {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .name_shopping {
+        margin-left: 10px;
+    }
+
+    .edit {
+        margin-left: 3px;
+    }
+
+    .cena_calkowita {
+        margin-right: 10px;
+    }
+
+    .button2 {
+        width: 100%;
+    }
+}
