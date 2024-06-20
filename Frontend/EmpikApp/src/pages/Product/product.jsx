@@ -191,8 +191,7 @@ function Product() {
                             .map((product) => (
                                 <div className='product_item' key={product.id}>
                                     <div className='item_img'>
-                                        <img src={product.imagePath} alt={product.name} width="150"
-                                             height="150"/>
+                                        <img src={product.imagePath} alt={product.name} width="150" height="150"/>
                                     </div>
                                     <div className='item_text'>
                                     <p>{product.producer + " " + product.name}</p>
