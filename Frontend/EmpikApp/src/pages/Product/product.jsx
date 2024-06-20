@@ -191,10 +191,11 @@ function Product() {
                             .map((product) => (
                                 <div className='product_item' key={product.id}>
                                     <div className='item_img'>
-                                        <img src={product.imageSrc ? product.imageSrc : "/src/images/Product/item.png"} className="item"  alt={product.name}/>
+                                        <img src={product.imagePath} alt={product.name} width="150"
+                                             height="150"/>
                                     </div>
                                     <div className='item_text'>
-                                        <p>{product.producer + " " + product.name}</p>
+                                    <p>{product.producer + " " + product.name}</p>
                                         <div className='row_item'>
                                             <b><p>{product.price} zł</p></b>
                                             <button className='ADD' onClick={() => addToCart(product.id)}>ADD</button>

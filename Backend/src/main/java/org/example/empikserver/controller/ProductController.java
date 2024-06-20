@@ -3,11 +3,14 @@ package org.example.empikserver.controller;
 import org.example.empikserver.model.Product;
 import org.example.empikserver.payload.request.ProductRequest;
 import org.example.empikserver.repository.ProductRepository;
+import org.example.empikserver.service.ImageSavingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class ProductController {
+
+    @Autowired
+    ImageSavingService imageSavingService;
 
     @Autowired
     ProductRepository productRepository;
@@ -62,12 +68,12 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@ModelAttribute ProductRequest product) {
         try{
 
-            //byte[] imageData = product.getImage().getBytes();
-
+            MultipartFile image = product.getImage();
+            String imagePath = imageSavingService.saveImageToFileSystem(image);
 
 
             Product prod = productRepository
-                    .save(new Product(product, false/*, imageData*/));
+                    .save(new Product(product, true, imagePath));
             return new ResponseEntity<>(prod, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
