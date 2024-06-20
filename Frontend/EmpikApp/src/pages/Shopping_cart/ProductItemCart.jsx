@@ -44,7 +44,7 @@ const ProductItemCart = ({ product, onChange }) => {
 
     return (
         <div className="product_item_shoping">
-            <img src="/src/images/Product/item.png" className="item" />
+            <img src={product.imagePath} className="item" width="150" height="150"/>
             <div className="shopping_info">
                 <span className="name_shopping">{product.name + " " + product.variant}</span>
                 <span>{product.producer}</span>
@@ -71,6 +71,7 @@ ProductItemCart.propTypes = {
         quantity: PropTypes.number.isRequired,
         variant: PropTypes.string.isRequired,
         addToOrder: PropTypes.bool.isRequired,
+        imagePath: PropTypes.string.isRequired,
     }).isRequired,
     onChange: PropTypes.func.isRequired,
 };
