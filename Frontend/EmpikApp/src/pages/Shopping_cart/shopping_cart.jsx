@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { Link } from "react-router-dom";
 import PATH from "../../paths";
 import "../../styles/shopping_cart.css";
@@ -7,6 +7,7 @@ import basketService from "../../services/basketService.js";
 import { logout } from "../../actions/auth.js";
 import { Commet } from "react-loading-indicators";
 import ProductItemCart from "./ProductItemCart.jsx";
+import { UserContext } from "../../App.jsx";
 import { setReduxBasket } from "../../actions/basket.js";
 
 function Shopping_cart() {
@@ -16,6 +17,8 @@ function Shopping_cart() {
     const [basketPrice, setBasketPrice] = useState(0);
     const userState = useSelector(state => state.user);
     const dispatch = useDispatch();
+    const { userRoleContext, setUserRoleContext } = useContext(UserContext);
+
 
     useEffect(() => {
         getBasket();
@@ -70,8 +73,8 @@ function Shopping_cart() {
 
     return (
         <div className='body_product'>
-            <div className='topbar'>
-                <img src="/src/images/Product/logo.png" className="logo" />
+            <div className='topbar5'>
+                <img src="/src/images/Product/logo.png" className="logo" alt="Logo" />
                 <div className='topbar-right'>
                     <Link to={PATH.PRODUCT}>
                         <button className='product'>Products</button>
@@ -82,12 +85,20 @@ function Shopping_cart() {
                     <Link to={PATH.PROFILE}>
                         <button className='product'>Profile</button>
                     </Link>
+                    <Link to={PATH.ADMIN_BOARD}>
+                    {userRoleContext === "admin" ? (
+                        <button className='product'>Panel Admina</button>
+                    ) : (
+                        <span></span>
+                    )}
+                    </Link>
                 </div>
                 {userState.isLoggedIn ? (
-                    <div className='logout'>
-                        <Link to={PATH.PRODUCT}>
-                            <button className='logout-button' onClick={logOut}>Log Out</button>
-                        </Link>
+                    <div className={userRoleContext === "admin" ? 'logout admin-logout' : 'logout'}>
+                        <button
+                            className='logout-button'
+                            onClick={logOut}
+                        >Log Out</button>
                     </div>
                 ) : (
                     <div className='logout'>

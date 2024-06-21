@@ -69,7 +69,7 @@ function Login() {
                      value={username}
                      onChange={(e) => setUsername(e.target.value)}
                     />
-                     {errors.username && <span>{errors.username}</span>}
+                     {errors.username && <span >{errors.username}</span>}
                      <input
                          type="password"
                          placeholder="Password"
@@ -78,6 +78,7 @@ function Login() {
                          onChange={(e) => setPassword(e.target.value)}
                      />
                      {errors.password && <span>{errors.password}</span>}
+                     {message && <span>{message}</span>}
                      <div className="button_container">
                          <div className='register_conatiner'>
                              <text>Don&apos;t have an account?</text>
@@ -91,7 +92,6 @@ function Login() {
                          >Login
                          </button>
                      </div>
-                     {message && <span>{message}</span>}
                  </form>
                 <div className='text_container'>
                     <span className='text2'>Or Login With</span>

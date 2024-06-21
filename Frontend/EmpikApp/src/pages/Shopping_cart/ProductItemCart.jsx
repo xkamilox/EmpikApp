@@ -36,17 +36,11 @@ const ProductItemCart = ({ product, onChange }) => {
         }
     };
 
-    const changeAddToOrder = () => {
-        const newAddToOrder = !addToOrder;
-        setAddToOrder(newAddToOrder);
-        onChange(product.id, newAddToOrder, product.price * quantity);
-    };
-
     return (
         <div className="product_item_shoping">
             <img src={product.imagePath} className="item" width="150" height="150"/>
             <div className="shopping_info">
-                <span className="name_shopping">{product.name + " " + product.variant}</span>
+                <span className="name_shopping">{product.name}</span>
                 <span>{product.producer}</span>
                 <div className="shopping_edit">
                     <div className="ilosc_edit">
@@ -54,8 +48,7 @@ const ProductItemCart = ({ product, onChange }) => {
                         <button className="edit" onClick={() => addToCart(product.id)}>+</button>
                         <button className="edit" onClick={() => removeFromCart(product.id)}>-</button>
                     </div>
-                    <b><span>Cena: {product.price * quantity} zł</span></b>
-                    <Checkbox checked={addToOrder} onChange={changeAddToOrder} />
+                    <b><span className="cena_shop">Cena: {product.price * quantity} zł</span></b>
                 </div>
             </div>
         </div>

@@ -31,15 +31,15 @@ function Registration() {
     }
 
       if(!email || email.length>50){
-          validationErrors.email = "Email should contain more than 0 and less than 50 characters"
+          validationErrors.email = "email should contain more than 0 and less than 50 characters"
       }else if( !isEmail(email) ){
-          validationErrors.email = "Invalid email format"
+          validationErrors.email = "invalid email format"
       }
 
     if(!password.trim()){
           validationErrors.password = "password is required"
     }else if( password.length<8 || password.length>40){
-          validationErrors.password = "Password should contain between 8 and 120 characters"
+          validationErrors.password = "password should contain between 8 and 120 characters"
     }
 
     if(!repPassword.trim()){
@@ -74,7 +74,7 @@ function Registration() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
               />
-              {errors.username && <span>{errors.username}</span>}
+              {errors.username && <span className="error-message">{errors.username}</span>}
               <input
                   type="email"
                   placeholder="Email"
@@ -82,7 +82,7 @@ function Registration() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
               />
-              {errors.email && <span>{errors.email}</span>}
+              {errors.email && <span >{errors.email}</span>}
               <input
                   type="password"
                   placeholder="Password"
@@ -90,7 +90,7 @@ function Registration() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
               />
-              {errors.password && <span>{errors.password}</span>}
+              {errors.password && <span className="error-message">{errors.password}</span>}
               <input
                   type="password"
                   placeholder="Repeat password"
@@ -98,7 +98,7 @@ function Registration() {
                   value={repPassword}
                   onChange={(e) => setRepPassword(e.target.value)}
               />
-              {errors.repPassword && <span>{errors.repPassword}</span>}
+              {errors.repPassword && <span className="error-message">{errors.repPassword}</span>}
 
               <div className="button_container">
                   <div className='login_conatiner'>

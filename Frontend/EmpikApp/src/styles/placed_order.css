@@ -1,0 +1,147 @@
+.placed-order-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product5 {
+    background-color: rgb(235, 86, 0);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .product5:hover {
+    background-color: rgb(211, 78, 0);
+  }
+  
+  .order-details {
+    margin-top: 20px;
+  }
+  
+  .order-status {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .order-id {
+    font-weight: bold;
+  }
+  
+  .order-date {
+    margin-top: 10px;
+    color: #555;
+  }
+  
+  @media (max-width: 1200px) {
+    .placed-order-container {
+        padding: 18px;
+    }
+
+    .product5 {
+        padding: 9px 18px;
+        font-size: 15px;
+    }
+
+    .order-status {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 992px) {
+    .placed-order-container {
+        padding: 16px;
+    }
+
+    .product5 {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .order-status {
+        font-size: 16px;
+    }
+
+    .order-id {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .placed-order-container {
+        padding: 14px;
+    }
+
+    .product5 {
+        padding: 7px 14px;
+        font-size: 13px;
+    }
+
+    .order-status {
+        font-size: 15px;
+    }
+
+    .order-id {
+        font-size: 15px;
+    }
+
+    .order-date {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .placed-order-container {
+        padding: 12px;
+        margin: 15px auto;
+    }
+
+    .product5 {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .order-status {
+        font-size: 14px;
+    }
+
+    .order-id {
+        font-size: 14px;
+    }
+
+    .order-date {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .placed-order-container {
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    .product5 {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+
+    .order-status {
+        font-size: 13px;
+    }
+
+    .order-id {
+        font-size: 13px;
+    }
+
+    .order-date {
+        font-size: 12px;
+    }
+}

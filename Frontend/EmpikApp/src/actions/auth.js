@@ -39,10 +39,10 @@ export const login = (username, password) => (dispatch) => {
         payload: {user: data},
       });
 
-      dispatch({
-        type: "message/setMessage",
-        payload: "zalogowano",
-      });
+      // dispatch({
+      //   type: "message/setMessage",
+      //   payload: "zalogowano",
+      // });
 
       return data;
     },

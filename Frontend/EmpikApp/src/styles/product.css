@@ -5,11 +5,11 @@
     height: 100vh;
 }
 
-.topbar {
+.topbar5 {
     display: flex;
     background-color: black;
     background-size: cover;
-    height: 20vh;
+    height: 16vh;
     width: 100%;
 }
 
@@ -25,8 +25,27 @@
 }
 
 .logout {
-    margin-left: auto;
-    padding: 1%;
+    position: absolute;
+    top: 0px;
+    right: 0px; 
+    padding: 1%; 
+}
+
+.logout-button.admin-logout {
+    background-color: white;
+    border: none;
+    font-size: 100%;
+    font-weight: bold;
+    border-radius: 5px;
+    height: 5vh;
+    width: 15vh;
+}
+
+.admin-logout {
+    position: absolute;
+    top: 0px;
+    right: 0px; 
+    padding: 1%; 
 }
 
 .product {
@@ -180,13 +199,19 @@
     border-color: #eb5600;
 }
 
+.pagination .active button {
+    background-color: #eb5600;
+    color: white;
+    border-color: #eb5600;
+}
+
 .image {
     max-width: 100%;
     height: auto;
 }
 
-@media screen and (max-width: 390px) {
-    .topbar {
+@media screen and (max-width: 1200px) {
+    .topbar5 {
         height: 15vh;
     }
 
@@ -199,14 +224,84 @@
     }
 
     .menu {
-        width: 100%;
-        margin: 1%;
-        margin-left: 0;
+        width: 25vw;
+    }
+
+    .menu_option_button {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+
+    .product_item {
+        width: 25vh;
+    }
+
+    .pagination button {
+        padding: 6px 10px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .topbar5 {
+        height: 14vh;
+    }
+
+    .logo {
+        margin-left: 1vw;
+    }
+
+    .topbar-right {
+        padding: 0 2vw;
+    }
+
+    .menu {
+        width: 30vw;
     }
 
     .menu_option_button {
         padding-left: 8%;
         padding-right: 8%;
+    }
+
+    .product_item {
+        width: 20vh;
+        margin: 5px 0;
+    }
+
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pagination li {
+        margin: 5px 0;
+    }
+
+    .pagination button {
+        padding: 5px 8px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .topbar5 {
+        height: 13vh;
+    }
+
+    .logo {
+        margin-left: 1vw;
+    }
+
+    .topbar-right {
+        padding: 0 1vw;
+    }
+
+    .menu {
+        width: 35vw;
+    }
+
+    .menu_option_button {
+        padding-left: 6%;
+        padding-right: 6%;
     }
 
     .product_item {
@@ -224,6 +319,10 @@
         margin: 5px 0;
     }
 
+    .pagination button {
+        padding: 5px 8px;
+    }
+
     .input {
         height: 30px;
         font-size: 14px;
@@ -231,5 +330,166 @@
 
     .ADD {
         height: 30px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .topbar5 {
+        height: 12vh;
+        padding: 0 10px; /* Additional padding for very small screens */
+    }
+
+    .logo {
+        margin-left: 0.5vw;
+    }
+
+    .topbar-right {
+        padding: 0 1vw;
+    }
+
+    .menu {
+        width: 40vw;
+    }
+
+    .menu_option_button {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .product_item {
+        width: 100%;
+        margin: 10px 0;
+        font-size: 90%;
+    }
+
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pagination li {
+        margin: 5px 0;
+    }
+
+    .pagination button {
+        padding: 4px 6px;
+    }
+
+    .input {
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .ADD {
+        height: 28px;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .topbar5 {
+        height: 11vh;
+        padding: 0 5px; /* Additional padding for very small screens */
+    }
+
+    .logo {
+        margin-left: 0.5vw;
+    }
+
+    .topbar-right {
+        padding: 0 1vw;
+    }
+
+    .menu {
+        width: 100%;
+        margin: 1%;
+        margin-left: 0;
+    }
+
+    .menu_option_button {
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .product_item {
+        width: 100%;
+        margin: 10px 0;
+        font-size: 80%;
+    }
+
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pagination li {
+        margin: 5px 0;
+    }
+
+    .pagination button {
+        padding: 4px 6px;
+    }
+
+    .input {
+        height: 26px;
+        font-size: 12px;
+    }
+
+    .ADD {
+        height:26px;
+    }
+}
+
+/* Adjustments for very small screens */
+@media screen and (max-width: 320px) {
+    .topbar5 {
+        height: 10vh;
+        padding: 0 5px; /* Additional padding for very small screens */
+    }
+
+    .logo {
+        margin-left: 0.5vw;
+    }
+
+    .topbar-right {
+        padding: 0 1vw;
+    }
+
+    .menu {
+        width: 100%;
+        margin: 1%;
+        margin-left: 0;
+    }
+
+    .menu_option_button {
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .product_item {
+        width: 100%;
+        margin: 10px 0;
+        font-size: 75%;
+    }
+
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pagination li {
+        margin: 5px 0;
+    }
+
+    .pagination button {
+        padding: 3px 5px;
+    }
+
+    .input {
+        height: 24px;
+        font-size: 11px;
+    }
+
+    .ADD {
+        height: 24px;
     }
 }

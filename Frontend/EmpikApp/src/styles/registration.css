@@ -22,6 +22,7 @@ h2{
     margin-top: 5vh;
     border: 2px solid #ccc;
     border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .button{
@@ -49,4 +50,162 @@ h2{
 
 text{
     font-size: small;
+}
+
+span.error-message {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 1200px) {
+    .register_container {
+        max-width: 450px;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin-top: 8vh;
+    }
+
+    .input_field {
+        margin-top: 4vh;
+    }
+
+    .button_container {
+        margin-top: 4vh;
+    }
+}
+
+@media (max-width: 992px) {
+    .register_container {
+        max-width: 400px;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.6em;
+        margin-top: 7vh;
+    }
+
+    .input_field {
+        margin-top: 3vh;
+    }
+
+    .button_container {
+        margin-top: 3vh;
+        flex-direction: column;
+        gap: 10px; 
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .button_register {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .register_container {
+        max-width: 350px;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.4em;
+        margin-top: 6vh;
+    }
+
+    .input_field {
+        margin-top: 2vh;
+    }
+
+    .button_container {
+        margin-top: 2vh;
+        flex-direction: column;
+        gap: 10px; 
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .button_register {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .register_container {
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        margin-top: 5vh;
+    }
+
+    .input_field {
+        margin-top: 1.5vh;
+    }
+
+    .button_container {
+        margin-top: 1.5vh;
+        flex-direction: column;
+        gap: 8px; 
+    }
+
+    .button {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .button_register {
+        width: 100%;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .body_registration {
+        padding: 0 10px; 
+    }
+
+    .register_container {
+        max-width: 280px;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1em;
+        margin-top: 4vh;
+    }
+
+    .input_field {
+        margin-top: 1vh;
+    }
+
+    .button_container {
+        margin-top: 1vh;
+        flex-direction: column;
+        gap: 6px; 
+    }
+
+    .button {
+        width: 100%;
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .button_register {
+        width: 100%;
+        padding: 6px;
+        font-size: 14px;
+    }
 }
