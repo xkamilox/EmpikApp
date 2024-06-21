@@ -1,39 +1,42 @@
-// eslint-disable-next-line react/prop-types
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import FavoriteService from '../../services/favoriteService';
 
-import {useState} from "react";
-import FavoriteService from "../../services/favoriteService.js";
+import "../../styles/favourite.css";
 
-function FavoriteProduct({favoriteProduct, onChange} ) {
+function FavoriteProduct({ favoriteProduct, onChange }) {
     const [isHeartHovered, setIsHeartHovered] = useState(false);
 
-
-    const removeFromFavorites = async() => {
+    const removeFromFavorites = async () => {
         await FavoriteService.removeProductFromFavorites(favoriteProduct.id);
         onChange();
-    }
+    };
 
     const handleMouseEnter = () => setIsHeartHovered(true);
     const handleMouseLeave = () => setIsHeartHovered(false);
 
     return (
-        <div>
-            {/* eslint-disable-next-line react/prop-types */}
-            {/*TODO Jak is_available==false to zrobić wyszarzenie czy coś*/}
-            <img src={favoriteProduct.imagePath} alt={favoriteProduct.name} width="150" height="150"/>
-            <p>{favoriteProduct.name}</p>
-            <p>{favoriteProduct.variant}</p>
-            <p>{favoriteProduct.producer}</p>
-            <p>{favoriteProduct.price}</p>
-
-            <img src={isHeartHovered ? "/images/heart_unfilled.png" : "/images/HeartStraight.png"} alt="remove"
-                 onClick={removeFromFavorites}
-                 onMouseEnter={handleMouseEnter}
-                 onMouseLeave={handleMouseLeave}
-                 width="35"
-                 height="35"
+        <div className="favorite-product-container">
+            <img
+                className="product-image"
+                src={favoriteProduct.imagePath}
+                alt={favoriteProduct.name}
             />
-
+            <div className="product-info">
+                <p className="product-name">{favoriteProduct.name}</p>
+                <p className="product-producer">{favoriteProduct.producer}</p>
+                <p className="product-price">{favoriteProduct.price} zł</p>
+            </div>
+            <img
+                className="remove-icon"
+                src={isHeartHovered ? '/images/heart_unfilled.png' : '/images/HeartStraight.png'}
+                alt="remove"
+                onClick={removeFromFavorites}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                width="35"
+                height="35"
+            />
         </div>
     );
 }
@@ -44,11 +47,10 @@ FavoriteProduct.propTypes = {
         name: PropTypes.string.isRequired,
         producer: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
-        is_available: PropTypes.bool.isRequired,
         variant: PropTypes.string.isRequired,
         imagePath: PropTypes.string.isRequired,
     }).isRequired,
     onChange: PropTypes.func.isRequired,
-}
+};
 
 export default FavoriteProduct;

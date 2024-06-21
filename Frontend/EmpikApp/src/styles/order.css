@@ -1,0 +1,148 @@
+.order-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-info {
+    margin-bottom: 10px;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.product-info {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.product-info span {
+    display: block;
+    margin: 2px 0;
+}
+
+.product-price {
+    font-weight: bold;
+}
+
+.payment-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(235, 86, 0);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-button:hover {
+    background-color: rgb(211, 78, 0);
+}
+
+.empty-span {
+    display: inline-block;
+    height: 38px; 
+}
+
+@media (max-width: 1200px) {
+    .order-container {
+        padding: 15px;
+    }
+
+    .product-info {
+        margin-right: 8px;
+    }
+
+    .payment-button {
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 992px) {
+    .order-container {
+        padding: 15px;
+    }
+
+    .product-container {
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    .product-info {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    .payment-button {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-container {
+        padding: 10px;
+    }
+
+    .product-container {
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    .product-info {
+        margin-bottom: 8px;
+    }
+
+    .payment-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .order-container {
+        padding: 10px;
+    }
+
+    .product-container {
+        padding: 5px;
+    }
+
+    .product-info span {
+        font-size: 14px;
+    }
+
+    .payment-button {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-container {
+        padding: 5px;
+    }
+
+    .product-container {
+        padding: 5px;
+    }
+
+    .product-info span {
+        font-size: 12px;
+    }
+
+    .payment-button {
+        padding: 5px;
+        font-size: 10px;
+    }
+}

@@ -34,10 +34,7 @@ function Product() {
     const getProducts = async() => {
          await axiosInstance.get("products")
             .then( (response) => {
-                //const prodsImgs = ProductService.convertImageFromByteArray(response.data);
-                //console.log(prodsImgs);
                 setProducts(response.data);
-                //setProducts(prodsImgs);
             })
             .catch((error) => {
                 console.log("Nie pobrano produktów: " + error.response.status);
@@ -79,6 +76,12 @@ function Product() {
         setCurrentPage(pageNumber);
     };
 
+    const resetFilters = () => {
+        setCategory("");
+        setSearchTerm("");
+        setCurrentPage(1);
+    };
+
     const totalPages = Math.ceil(products.length / productsPerPage);
 
     const indexOfLastProduct = currentPage * productsPerPage;
@@ -96,7 +99,7 @@ function Product() {
 
     return (
         <div className='body_product'>
-            <div className='topbar'>
+            <div className='topbar5'>
                 <img src="/src/images/Product/logo.png" className="logo" alt="Logo" />
                 <div className='topbar-right'>
                     <Link to={PATH.PRODUCT}>
@@ -109,11 +112,15 @@ function Product() {
                         <button className='product'>Profile</button>
                     </Link>
                     <Link to={PATH.ADMIN_BOARD}>
-                        {userRoleContext === "admin" ? (<span style={{ color: "white" }}>panelAdmina</span>) : (<span></span>)}
+                    {userRoleContext === "admin" ? (
+                        <button className='product'>Panel Admina</button>
+                    ) : (
+                        <span></span>
+                    )}
                     </Link>
                 </div>
                 {userState.isLoggedIn ? (
-                    <div className='logout'>
+                    <div className={userRoleContext === "admin" ? 'logout admin-logout' : 'logout'}>
                         <button
                             className='logout-button'
                             onClick={logOut}
@@ -129,6 +136,11 @@ function Product() {
             </div>
             <div className='container'>
                 <div className='menu'>
+                    {(category || searchTerm) && (
+                        <button className='reset_filters_button' onClick={resetFilters}>
+                            Reset Filters
+                        </button>
+                    )}
                     <div className='body_input'>
                         <input
                             type="text"
@@ -139,58 +151,58 @@ function Product() {
                         />
                         <img src="/src/images/Product/search.png" className="search" alt="Search" />
                     </div>
-                <button className='menu_option_button' onClick={() => filterProductsByCategory('Electronics')}>
-                    Electronics
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" alt="Arrow" />
-                </button>
-                <button className='menu_option_button' onClick={() => filterProductsByCategory('Fashion')}>
-                    Fashion
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" alt="Arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Home & Garden
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Health & Beauty
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Sports & Outdoors
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Toys & Games
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Books & Magazines
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Automotive
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Food & Grocery
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Pet Supplies
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-                <button className='menu_option_button'>
-                    Arts & Crafts
-                    <img src="/src/images/Product/right-arrow.png" className="arrow" />
-                </button>
-            </div>
-            <div className='products_item'>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Electronics')}>
+                        Electronics
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" alt="Arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Fashion')}>
+                        Fashion
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" alt="Arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Home')}>
+                        Home & Garden
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Health')}>
+                        Health & Beauty
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Sports')}>
+                        Sports & Outdoors
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Toys')}>
+                        Toys & Games
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Books')}>
+                        Books & Magazines
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Automotive')}>
+                        Automotive
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Food')}>
+                        Food & Grocery
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Pet')}>
+                        Pet Supplies
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                    <button className='menu_option_button' onClick={() => filterProductsByCategory('Arts')}>
+                        Arts & Crafts
+                        <img src="/src/images/Product/right-arrow.png" className="arrow" />
+                    </button>
+                </div>
+                <div className='products_item'>
                     {row1.length > 0 && (
                         <div className='roww'>
                             {row1.map(product => (
                                 <div className='product_item' key={product.id}>
                                     <div className='item_img'>
-                                        <img src={product.imageSrc ? product.imageSrc : "/src/images/Product/item.png"} className="item" alt={product.name} />
+                                        <img src={product.imagePath} alt={product.name} width="150" height="150"/>
                                     </div>
                                     <div className='item_text'>
                                         <p>{product.producer + " " + product.name}</p>
@@ -217,7 +229,7 @@ function Product() {
                                         <img src={product.imagePath} alt={product.name} width="150" height="150"/>
                                     </div>
                                     <div className='item_text'>
-                                    <p>{product.producer + " " + product.name}</p>
+                                        <p>{product.producer + " " + product.name}</p>
                                         <div className='row_item'>
                                             <b><p>{product.price} zł</p></b>
                                             <button className='ADD' onClick={() => addToCart(product.id)}>ADD</button>
