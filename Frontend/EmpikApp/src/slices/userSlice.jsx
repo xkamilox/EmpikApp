@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-//const user = JSON.parse(localStorage.getItem("user"))
-const user = JSON.parse(localStorage.getItem("auth"))
-const google = JSON.parse(localStorage.getItem("google"));
+
+const auth = JSON.parse(localStorage.getItem("auth"))
+//const google = JSON.parse(localStorage.getItem("google"));
 
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        isLoggedIn: user ? true : false,
-        isLoggedInGoogle: google ? true : false,
+        isLoggedIn: auth ? true : false,
+        isLoggedInGoogle: auth ? true : false,
         failedLogins: 0,
         //user: user ? user : null,
     },
@@ -24,6 +24,7 @@ export const userSlice = createSlice({
         },
         logout: (state) => {
             state.isLoggedIn = false;
+            state.isLoggedInGoogle = false;
             //state.user = null;
         },
         incrementLoginFail: (state) => {

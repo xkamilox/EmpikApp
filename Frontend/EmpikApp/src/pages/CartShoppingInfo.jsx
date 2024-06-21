@@ -8,6 +8,7 @@ import "../styles/shopping_cart.css";
 
 function CartShoppingInfo() {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+    const isLoggedInGoogle = useSelector(state => state.user.isLoggedInGoogle);
     const userid = JSON.parse(localStorage.getItem("auth"))?.userid;
     const basket = useSelector(state => state.basket);
     const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ function CartShoppingInfo() {
 
 
     useEffect(() => {
-        if(isLoggedIn){
+        if(isLoggedIn || isLoggedInGoogle){
             const getUserInfo = async() => {        //Pobiera dane użytkownika żeby uzupełnić pola
                 await axiosInstance.get(`/users/${userid}`)
                     .then((response) => {
@@ -133,7 +134,7 @@ function CartShoppingInfo() {
                 onChange={(e) => setCountry(e.target.value)}
             />
             <div className="button_row">
-                {isLoggedIn ? (<button className="button2" onClick={() => handleBuyButton(false)}>Place order and pay later</button>) : (<span></span>)}
+                {isLoggedIn || isLoggedInGoogle ? (<button className="button2" onClick={() => handleBuyButton(false)}>Place order and pay later</button>) : (<span></span>)}
                 <button className="button2" onClick={() => handleBuyButton(true)}>Place order and pay now</button>
             </div>
         </div>

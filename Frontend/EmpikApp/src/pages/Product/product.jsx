@@ -52,7 +52,7 @@ function Product() {
     }
 
     const addToCart = (id) => {
-        if (userState.isLoggedIn) {
+        if (userState.isLoggedIn || userState.isLoggedInGoogle ) {
             basketService.addToUserBasket(id);
         } else {
             basketService.addToLocalStorageBasket(id);
@@ -62,6 +62,7 @@ function Product() {
     const logOut = () => {
         setUserRoleContext(null);
         dispatch(logout());
+        navigator.replace("/");
     };
 
     const filterProductsByCategory = (category) => {
@@ -119,7 +120,7 @@ function Product() {
                     )}
                     </Link>
                 </div>
-                {userState.isLoggedIn ? (
+                {userState.isLoggedIn || userState.isLoggedInGoogle ? (
                     <div className={userRoleContext === "admin" ? 'logout admin-logout' : 'logout'}>
                         <button
                             className='logout-button'

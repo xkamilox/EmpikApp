@@ -1,5 +1,5 @@
 import React, {createContext, useState} from 'react';
-import { Route, Routes, Navigate } from "react-router-dom"
+import {Route, Routes, Navigate, useNavigate} from "react-router-dom"
 import PATH from './paths';
 import './App.css';
 import Login from './pages/Login/login';
@@ -25,11 +25,13 @@ export const UserContext = createContext(null); //do kontekstu zapisana jest rol
 
 function App() {
     const [userRoleContext, setUserRoleContext] = useState(null);
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
     const logOut = () => {
         setUserRoleContext(null);
         dispatch(logout());
+        navigate('/', { replace: true });
     }
 
   return (

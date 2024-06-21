@@ -70,7 +70,7 @@ public class AuthController {
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
         return ResponseEntity
-                .ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+                .ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(), roles));
     }
 
     @GetMapping("/login/oauth2/code/github")
@@ -78,6 +78,52 @@ public class AuthController {
         return Collections.singletonMap("name", principal.getAttribute("name"));
     }
 
+    @PostMapping("/signin/google")
+    public ResponseEntity<?> googleLogin(@RequestParam String googleCredential) {
+        try{
+            System.out.println(jwtUtils.getEmailFromJwtToken(googleCredential));
+            String email = jwtUtils.getEmailFromJwtToken(googleCredential);
+            String username = "@Google" + email;
+
+            if(!userRepository.existsByUsername(username)) {
+                User user = new User(username, email,
+                        encoder.encode(username));
+
+
+                Set<Role> roles = new HashSet<>();
+
+                Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                roles.add(userRole);
+
+                user.setRoles(roles);
+                userRepository.save(user);
+            }
+            else{
+                Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(username, username));
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+                String jwt = jwtUtils.generateJwtToken(userDetails);
+
+                List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+                        .collect(Collectors.toList());
+
+                RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
+        return ResponseEntity
+                .ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),roles));
+            }
+            return ResponseEntity.ok("qwe");
+        }catch(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .ok("nieudane");
+        }
+
+    }
 
 
     @PostMapping("/signup")

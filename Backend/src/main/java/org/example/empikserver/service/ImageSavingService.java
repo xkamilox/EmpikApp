@@ -20,20 +20,17 @@ public class ImageSavingService {
             throw new IOException("Invalid file upload.");
         }
 
-        // Get the current working directory
         Path currentDir = Paths.get("");/*.toAbsolutePath();*/ //System.out.println(currentDir);
         Path uploadDir = currentDir.resolve(imageUploadPath); System.out.println(uploadDir);
 
-        // Create directories if they do not exist
         if (!Files.exists(uploadDir)) {
             Files.createDirectories(uploadDir);
         }
 
-        // Create the file path
         String filename = System.currentTimeMillis() + "_" + image.getOriginalFilename();
         Path filePath = uploadDir.resolve(filename);
 
-        // Save the file to disk
+
         Files.copy(image.getInputStream(), filePath);
 
         return filePath.toString().replace("Frontend\\EmpikApp\\", "");

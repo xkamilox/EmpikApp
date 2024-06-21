@@ -6,6 +6,8 @@ import "../../styles/login.css";
 import { GoogleLogin } from '@react-oauth/google';
 import {UserContext} from "../../App.jsx";
 import { login } from "../../actions/auth";
+import { jwtDecode } from "jwt-decode";
+import axiosInstance from "../../interceptors/axiosInstance.jsx";
 
 
 
@@ -42,18 +44,32 @@ function Login() {
                     setUserRoleContext(user.roles.includes("ROLE_ADMIN") ? "admin" : "user");
                     console.log(userRoleContext);
                     navigate(PATH.PRODUCT);
-                    //window.location.reload();
                 });
         }
     };
 
-    const handleLoginSuccess = (response) => {
-        console.log(response);
-        dispatch({type: "user/loginGoogle"});
-        navigate(PATH.PRODUCT);
+    const handleGoogleLoginSuccess = async(response) => {
+        const credential = response.credential;
+
+        await axiosInstance.post("auth/signin/google", {},
+            {params: {googleCredential: credential}})
+            .then((response) => {
+                if(response.data.accessToken){
+                    localStorage.setItem("auth", JSON.stringify({
+                        accessToken: response.data.accessToken,
+                        refreshToken: response.data.refreshToken,
+                        userid: response.data.id
+                    }));
+                    setUserRoleContext(response.data.roles.includes("ROLE_ADMIN") ? "admin" : "user");
+                    dispatch({type: "user/loginGoogle"});
+                }
+
+                navigate(PATH.PRODUCT);
+            });
+
       };
     
-      const handleLoginError = () => {
+      const handleGoogleLoginError = () => {
         console.log('Login nieudany');
       };
 
@@ -99,8 +115,8 @@ function Login() {
                 <div className='google_div'>
                    
                         <GoogleLogin
-                            onSuccess={handleLoginSuccess}
-                            onError={handleLoginError}
+                            onSuccess={handleGoogleLoginSuccess}
+                            onError={handleGoogleLoginError}
                         />
                     
                 </div>

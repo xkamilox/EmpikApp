@@ -25,7 +25,7 @@ function Shopping_cart() {
     }, [basketChanged]);
 
     const getBasket = async () => {
-        if (userState.isLoggedIn) {
+        if (userState.isLoggedIn || userState.isLoggedInGoogle ) {
             await basketService.getUserBasket()
                 .then(async (data) => {
                     const products = await basketService.getProductsFromBasket(data);
@@ -93,7 +93,7 @@ function Shopping_cart() {
                     )}
                     </Link>
                 </div>
-                {userState.isLoggedIn ? (
+                {userState.isLoggedIn || userState.isLoggedInGoogle ? (
                     <div className={userRoleContext === "admin" ? 'logout admin-logout' : 'logout'}>
                         <button
                             className='logout-button'

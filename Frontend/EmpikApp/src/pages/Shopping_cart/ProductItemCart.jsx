@@ -13,7 +13,7 @@ const ProductItemCart = ({ product, onChange }) => {
     useEffect(() => {}, [quantity]);
 
     const removeFromCart = async (id) => {
-        if (userState.isLoggedIn) {
+        if (userState.isLoggedIn || userState.isLoggedInGoogle ) {
             const ok = await basketService.removeFromUserBasket(id);
             if (ok) setQuantity(quantity - 1);
             onChange();
@@ -25,7 +25,7 @@ const ProductItemCart = ({ product, onChange }) => {
     };
 
     const addToCart = async (id) => {
-        if (userState.isLoggedIn) {
+        if (userState.isLoggedIn || userState.isLoggedInGoogle ) {
             const ok = await basketService.addToUserBasket(id);
             if (ok) setQuantity(quantity + 1);
             onChange();

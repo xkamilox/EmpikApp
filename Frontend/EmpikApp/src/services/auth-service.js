@@ -13,7 +13,6 @@ import axiosInstance from "../interceptors/axiosInstance.jsx";
                   userid: response.data.id
                 }));
 
-                //localStorage.setItem("user", JSON.stringify(response.data));
               }
 
               return response.data;

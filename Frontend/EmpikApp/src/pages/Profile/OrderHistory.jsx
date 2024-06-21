@@ -67,7 +67,7 @@ function OrderHistory() {
                     )}
                     </Link>
                 </div>
-                {userState.isLoggedIn ? (
+                {userState.isLoggedIn || userState.isLoggedInGoogle ? (
                     <div className={userRoleContext === "admin" ? 'logout admin-logout' : 'logout'}>
                         <button
                             className='logout-button'
